@@ -44,6 +44,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/social">Social</a>
                     </li>
+                </ul>
+
+                <!-- Separated into different ul so that we can align it to the end of navbar -->
+                <ul class="nav list-inline ml-auto">
+
+                    <!-- If the user is logged in, they have the option to log out and look at their friends list -->
+                    {{#if logged_in}}
+
+                    <!-- Logout: Log out of the session -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+
+                    <!-- Friends List: Check your friends list -->
+                    <!-- The friends list appears in a modal -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/friends-list">Friends List</a>
+                    </li>
+
+                    <!-- If the user is not logged in, they can only check the login page to sign up or login -->
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+
+                    {{/if}}
 
                 </ul>
             </div>
