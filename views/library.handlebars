@@ -1,0 +1,70 @@
+<!-- Library has two columns: -->
+<!-- First: A table that contains all the games you've added. This column also contains the option to add a new game -->
+<!-- Second: A means to filter the table -->
+
+<div class="container">
+    <!-- This first row just contains the heading and description -->
+    <div class="row row-cols-1 justify-content-center my-3">
+        <div class="col-md-auto text-center">
+            <div class="container p-5">
+                <h2>Your library</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- This is the main row which contains the two columns -->
+    <div class="row row-cols-2 justify-content-center my-3">
+
+        <!-- Library Table -->
+        <div class="col-10 text-center">
+            <div class="container p-1">
+                <table class="table">
+
+                    <!-- Heading row -->
+                    <thead>
+                        <tr>
+                            <th scope="col">Game Title</th>
+                            <th scope="col">Platform</th>
+                            <th scope="col">Date Added</th>
+                            <th scope="col">Beaten?</th>
+                        </tr>
+                    </thead>
+
+                    <!-- The actual games -->
+                    <tbody>
+                        {{#if games.length}}
+                        {{#each games as |game|}}
+                        <tr>
+                            <th scope="row">{{game.title}}</th>
+                            <td>{{game.platform}}</td>
+                            <td>{{game.date_added}}</td>
+                            <td>{{game.beaten}}</td>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <!-- Filter-Table controls -->
+        <div class="col-2 text-center">
+            <div class="container p-1">
+                Filter By:
+                <ul class="m-2 list-group">
+                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        None
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1"
+                        aria-disabled="true">Beaten</a>
+                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1"
+                        aria-disabled="true">Platform</a>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
