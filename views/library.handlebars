@@ -1,5 +1,5 @@
 <!-- Library has two columns: -->
-<!-- First: A table that contains all the games you've added. This column also contains the option to add a new game -->
+<!-- First: A table that contains all the games you've added. -->
 <!-- Second: A means to filter the table -->
 
 <div class="container">
@@ -7,8 +7,16 @@
     <div class="row row-cols-1 justify-content-center my-3">
         <div class="col-md-auto text-center">
             <div class="container p-5">
-                <h2>Your library</h2>
+                <h2>Your Library</h2>
+                <p class="text-break fs-5 text-muted">On this page, you can see all the games that you have added to your digital library. If you want to add another game, just click the "Add Game" button.</p>
             </div>
+        </div>
+    </div>
+
+    <!-- This is a row that only contains the "Add Game" button -->
+    <div class="row row-cols-1 justify-content-start my-3">
+        <div class="d-grid gap-2 col-3 ">
+            <button class="btn btn-outline-primary" type="button">+ Add Game</button>
         </div>
     </div>
 
@@ -54,13 +62,12 @@
             <div class="container p-1">
                 Filter By:
                 <ul class="m-2 list-group">
-                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
                         None
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1"
-                        aria-disabled="true">Beaten</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1"
-                        aria-disabled="true">Platform</a>
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action">Beaten</button>
+                    <button type="button" class="list-group-item list-group-item-action">Platform</button>
+
                 </ul>
             </div>
         </div>
