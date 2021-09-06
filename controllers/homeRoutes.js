@@ -16,4 +16,12 @@ router.get('/library', async (req, res) => {
     }
 })
 
+router.get('/social', async (req, res) => {
+    try {
+        res.render('social');
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router;
