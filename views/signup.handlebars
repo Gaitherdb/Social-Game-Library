@@ -1,0 +1,50 @@
+<!-- Signup is a copy of login with extras and its own js script -->
+<div class="container">
+
+    <!-- Heading and Description -->
+    <div class="row row-cols-1 justify-content-center my-3">
+        <div class="col-md-auto text-center">
+            <div class="container p-5">
+                <h2>Sign Up</h2>
+                <p class="text-break fs-5 text-muted">Become a registered user so that you can manage your own digital game collection and
+                    follow your friends!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login form: Displayed by default -->
+    <div class="row row-cols-1 justify-content-center my-3" id="signupForm">
+        <div class="col-6">
+            <div class="container p-1">
+                <form>
+                    <div class="mb-3">
+                        <label for="signupUser" class="form-label">User Name</label>
+                        <input type="User" class="form-control" id="signupUser" aria-describedby="userHelpBlock">
+                        <div id="userHelpBlock" class="form-text">
+                            Your username must be a unique name. This name will be used throughout the site and will be
+                            visible to other users, so make sure it's not inappropriate!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signupEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelpBlock">
+                        <div id="emailHelpBlock" class="form-text">
+                            We'll never share your email with anyone else.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signupPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signupPassword">
+                        <div id="passwordHelpBlock" class="form-text" aria-describedby="passwordHelpBlock">
+                            Your password must be 8-20 characters long, contain letters and numbers, and must not
+                            contain spaces, special characters, or emoji.
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="signup()">Signup</button>
+                    <a class="btn btn-outline-primary" aria-current="page" href="/login">Login</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/signup.js"></script>
