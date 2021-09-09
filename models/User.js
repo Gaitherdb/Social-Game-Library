@@ -35,6 +35,13 @@ User.init(
         len: [8],
       },
     },
+    friend_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
   },
   {
     hooks: {
