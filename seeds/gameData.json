@@ -1,0 +1,24 @@
+[
+    {
+      "name": "Skyrim",
+      "platform": "PC",
+      "beaten": false,
+      "currently_playing": false,
+      "rating":2
+    },
+    {
+      "name": "Valheim",
+      "platform": "PC",
+      "beaten": true,
+      "currently_playing": true,
+      "rating": 4
+    },
+    {
+      "name": "Darksouls",
+      "platform": "PS5",
+      "beaten": true,
+      "currently_playing": false,
+      "rating": 3
+    }
+  ]
+  
