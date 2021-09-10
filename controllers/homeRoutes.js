@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { Game, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -13,10 +14,25 @@ router.get('/', async (req, res) => {
 
 router.get('/library', withAuth, async (req, res) => {
     try {
-        res.render('library', {
-            logged_in: req.session.logged_in
-        });
+        if (req.session.logged_in) {
+            const userID = req.session.user_id;
+            const gameData = await Game.findAll({
+                where: {
+                    user_id: userID
+                },
+                order: [
+                    ['id', 'DESC'],
+                ],
+            });
+            const games = gameData.map((game) => game.get({ plain: true }));
+            
+            res.render('library', {
+                games,
+                logged_in: req.session.logged_in
+            });
+        }
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 })
