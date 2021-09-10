@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Game, User } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // Get all games of the logged in user
 router.get('/', async (req, res) => {
@@ -30,7 +31,7 @@ router.get('/', async (req, res) => {
 });
 
 // Adding a game
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     let userID = req.session.user_id;
     try {
         const gameData = await Game.create({
