@@ -16,7 +16,7 @@
     </div>
 
     <!-- This is a row that only contains the "Add Game" button -->
-    <div class="row row-cols-1 justify-content-start my-3">
+    <div class="row row-cols-1 justify-content-center my-3">
         <div class="d-grid gap-2 col-3">
             <button class="btn btn-outline-primary" id="addGame" type="button">+ Add
                 Game</button>
@@ -54,8 +54,14 @@
                             Currently Playing
                         </label>
                     </div>
-                    <div class="col-lg-5 mb-1 offset-lg-1 ">
-                        <button type="submit" id="submitGame" class="btn btn-primary btn-lg">Submit</button>
+                    <div>
+                    <div class="row  ">
+                        <div class="position-relative">
+                            <button type="submit" id="submitGame" class="btn btn-primary btn-lg position-absolute bottom-0 start-50 translate-middle-x">Submit</button>
+                        </div>
+                        <div class="position-relative">
+                            <button type="button" id="cancelGame" class="btn btn-primary btn-lg position-absolute bottom-0 end-0">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +69,7 @@
             <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" style="display: none;">
                 <div class="modal-dialog">
-                    <div class="modal-content border border-danger">
+                    <div class="modal-content border border-4 border-danger">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Missing Content!</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

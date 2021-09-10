@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', function () {
     const addGameBtn = document.querySelector('#addGame');
     const addGameForm = document.querySelector('#addGameForm');
+    const cancelBtn = document.querySelector('#cancelGame');
 
     addGameBtn.addEventListener("click", function () {
         if (addGameForm.style.display === "none") {
@@ -8,6 +9,15 @@ window.addEventListener('DOMContentLoaded', function () {
             addGameBtn.style.display = "none";
         }
     })
+    
+        
+        cancelBtn.addEventListener("click", function () {
+            console.log("hi")
+            if (addGameForm.style.display === "block") {
+                addGameForm.style.display = "none";
+                addGameBtn.style.display = "block";
+            }
+        })
 
     const postGameHandler = async (event) => {
         event.preventDefault();
