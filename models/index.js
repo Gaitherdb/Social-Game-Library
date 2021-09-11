@@ -1,21 +1,23 @@
 const User = require('./User');
 const Game = require('./Game');
+const Friendship = require('./Friendship')
+const Ownership = require('./Ownership')
 
-User.hasMany(User, {
-    foreignKey: 'friend_id',
-    onDelete: 'CASCADE'
+User.belongsToMany(User, {
+    through: {
+        model: Friendship,
+        unique: false,
+    },
+    onDelete: 'CASCADE',
+    as: 'friends',
 });
 
-User.belongsTo(User, {
-    foreignKey: 'friend_id',
-})
+User.belongsToMany(Game, {
+    through: {
+      model: Ownership,
+      unique: false
+    },
+    as: 'owned_games'
+  });
 
-User.hasMany(Game, {
-    foreignKey: 'user_id',
-    onDelete: 'CASCADE'
-})
-Game.belongsTo(User, {
-    foreignKey: 'user_id',
-})
-
-module.exports = { User, Game };
+module.exports = { User, Game, Friendship, Ownership };

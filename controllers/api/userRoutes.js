@@ -1,10 +1,69 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Game, Ownership, Friendship } = require('../../models');
 
-// For Insomnia Testing: Gets all currently created users
-router.get('/', async (req, res) => {
+// Insomnia testing: Get all users and complete info for them
+router.get('/test/', async (req, res) => {
     try {
-        const userData = await User.findAll();
+        const userData = await User.findAll({
+            include:
+                [
+                    // Include their list of games
+                    {
+                        model: Game,
+                        through: { Ownership, attributes: [] },
+                        as: "owned_games",
+                    },
+                    // Include their list of friends
+                    {
+                        model: User,
+                        through: { Friendship, attributes: [] },
+                        as: "friends",
+                        //Include the games owned by the friend
+                        include: [
+                            {
+                                model: Game,
+                                through: { Ownership, attributes: [] },
+                                as: "owned_games",
+                            }
+                        ]
+                    }
+                ],
+        });
+        res.status(200).json(userData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// Insomnia testing: Get all info about one user
+router.get('/test/:id', async (req, res) => {
+    try {
+        const userData = await User.findByPk(req.params.id, {
+            include:
+                [
+                    // Include their list of games
+                    {
+                        model: Game,
+                        through: { Ownership, attributes: [] },
+                        as: "owned_games",
+                    },
+                    // Include their list of friends
+                    {
+                        model: User,
+                        through: { Friendship, attributes: [] },
+                        as: "friends",
+                        //Include the games owned by the friend
+                        include: [
+                            {
+                                model: Game,
+                                through: { Ownership, attributes: [] },
+                                as: "owned_games",
+                            }
+                        ]
+                    }
+                ],
+        });
+        
         res.status(200).json(userData);
     } catch (err) {
         res.status(500).json(err);

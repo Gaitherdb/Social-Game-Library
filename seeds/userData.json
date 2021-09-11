@@ -2,20 +2,17 @@
     {
       "name": "Elbin",
       "email": "elbin@email.com",
-      "password": "password",
-      "friend_id": "3"
+      "password": "password"
     },
     {
       "name": "Nick",
       "email": "nick@email.com",
-      "password": "password",
-      "friend_id": "1"
+      "password": "password"
     },
     {
       "name": "David",
       "email": "david@email.com",
-      "password": "password",
-      "friend_id": "2"
+      "password": "password"
     }
   ]
   

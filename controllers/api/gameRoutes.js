@@ -30,6 +30,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+
 // Adding a game
 router.post('/', withAuth, async (req, res) => {
     let userID = req.session.user_id;
