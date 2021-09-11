@@ -12,77 +12,11 @@ router.get('/', async (req, res) => {
     }
 })
 
-// router.get('/library', withAuth, async (req, res) => {
-//     try {
-//         const userID = req.session.user_id;
-//         const userData = await User.findAll({
-//             where: {
-//                 id: userID
-//             },
-//             order: [
-//                 ['id', 'DESC'],
-//             ],
-//             include:
-//                 [
-//                     // Include their list of games
-//                     {
-//                         model: Game,
-//                         through: { Ownership, attributes: [] },
-//                         as: "owned_games",
-//                     },
-//                     // Include their list of friends
-//                     {
-//                         model: User,
-//                         through: { Friendship, attributes: [] },
-//                         as: "friends",
-//                         //Include the games owned by the friend
-//                         include: [
-//                             {
-//                                 model: Game,
-//                                 through: { Ownership, attributes: [] },
-//                                 as: "owned_games",
-//                             }
-//                         ]
-//                     }
-//                 ],
-//         });
-//         const user = userData.get({ plain: true });
-//         res.render('library', {
-//             ...user,
-//             logged_in: req.session.logged_in
-//         });
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-//     // try {
-//     //     if (req.session.logged_in) {
-//     //         const userID = req.session.user_id;
-//     //         const gameData = await Game.findAll({
-//     //             where: {
-//     //                 user_id: userID
-//     //             },
-//     //             order: [
-//     //                 ['id', 'DESC'],
-//     //             ],
-//     //         });
-//     //         const games = gameData.map((game) => game.get({ plain: true }));
-            
-//     //         res.render('library', {
-//     //             games,
-//     //             logged_in: req.session.logged_in
-//     //         });
-//     //     }
-//     // } catch (err) {
-//     //     console.log(err);
-//     //     res.status(500).json(err);
-//     // }
-// })
-router.get('/library/', async (req, res) => {
+router.get('/library/', withAuth, async (req, res) => {
     try {
         const userData = await User.findAll({
             where: {
-                // id: req.session.user_id
-                id:1
+                id: req.session.user_id
             },
             include:
                 [

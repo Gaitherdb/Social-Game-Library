@@ -9,8 +9,10 @@
             <div class="container p-5">
                 <h2>Your Library</h2>
                 <p class="text-break fs-5 text-muted">On this page, you can see all the
-                    games that you have added to your digital library. If you want to add
-                    another game, just click the "Add Game" button.</p>
+                    games that you have added to your digital library. <br>
+                    If you want to add another game, just click the "Add Game" button. <br>
+                    If you want to edit existing game entries, just click on the entry you want to edit </br>
+                </p>
             </div>
         </div>
     </div>
@@ -88,12 +90,29 @@
 
 
     <!-- This is the main row which contains the two columns -->
-    <div class="row row-cols-3 justify-content-center my-3">
+    <div class="row justify-content-center my-3">
+
+<!-- Filter-Table controls -->
+        <div class="col-lg-2 col-sm-12 col-xs-12 text-center">
+            <div class="container p-1">
+                Filter By:
+                <ul class="m-2 list-group">
+                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                        None
+                    </button>
+
+                    <button type="button" class="list-group-item list-group-item-action">Currently Playing</button>
+                    <button type="button" class="list-group-item list-group-item-action">Beaten</button>
+                    <button type="button" class="list-group-item list-group-item-action">Platform</button>
+
+                </ul>
+            </div>
+        </div>
 
         <!-- Library Table -->
-        <div class="col-8 text-center">
-            <div class="container p-1">
-                <table class="table">
+        <div class="col-lg-8 col-sm-12 col-xs-12 text-center">
+            <div class="table-responsive-sm p-1" style="overflow: auto">
+                <table class="table table-hover">
 
                     <!-- Heading row -->
                     <thead>
@@ -138,24 +157,6 @@
                     </tbody>
 
                 </table>
-            </div>
-        </div>
-
-
-        <!-- Filter-Table controls -->
-        <div class="col-2 text-center">
-            <div class="container p-1">
-                Filter By:
-                <ul class="m-2 list-group">
-                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                        None
-                    </button>
-
-                    <button type="button" class="list-group-item list-group-item-action">Currently Playing</button>
-                    <button type="button" class="list-group-item list-group-item-action">Beaten</button>
-                    <button type="button" class="list-group-item list-group-item-action">Platform</button>
-
-                </ul>
             </div>
         </div>
 
