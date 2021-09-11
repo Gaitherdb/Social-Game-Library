@@ -1,0 +1,18 @@
+[
+    {
+      "owner_id": 1,
+      "friend_id": 2
+    },
+    {
+      "owner_id": 1,
+      "friend_id": 3
+    },
+    {
+      "owner_id": 2,
+      "friend_id": 1
+    },
+    {
+      "owner_id": 3,
+      "friend_id": 2
+    }
+  ]

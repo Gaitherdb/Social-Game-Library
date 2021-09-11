@@ -1,9 +1,19 @@
 const router = require('express').Router();
 const withAuth = require('../utils/auth');
+const { User, Game, Friend_Tag } = require('../models');
 
 router.get('/', async (req, res) => {
     try {
+        const data = await User.findAll({
+            where: {
+                id: req.session.user_id
+            },
+            include: [{ model: User, through: Friend_Tag, as: 'u1' }],
+          });    
+        const projects = data.map((el) => el.get({ plain: true }))
+        console.log(...projects);
         res.render('homepage', {
+            projects,
             logged_in: req.session.logged_in
         });
     } catch (err) {
