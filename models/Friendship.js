@@ -1,7 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-class Friend_Tag extends Model { };
-Friend_Tag.init(
+
+class Friendship extends Model { };
+
+Friendship.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -9,11 +11,12 @@ Friend_Tag.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        owner_id: {
+        user_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'user',
                 key: 'id',
+                unique: false
             },
         },
         friend_id: {
@@ -21,6 +24,7 @@ Friend_Tag.init(
             references: {
                 model: 'user',
                 key: 'id',
+                unique: false
             },
         },
     },
@@ -29,7 +33,7 @@ Friend_Tag.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'friend_tag',
+        modelName: 'friendship',
     }
 );
-module.exports = Friend_Tag;
+module.exports = Friendship;

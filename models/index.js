@@ -1,35 +1,23 @@
 const User = require('./User');
 const Game = require('./Game');
-const Friend_Tag = require('./Friend_Tag')
+const Friendship = require('./Friendship')
+const Ownership = require('./Ownership')
 
 User.belongsToMany(User, {
     through: {
-        model: Friend_Tag,
+        model: Friendship,
         unique: false,
     },
-    foreignKey: 'owner_id',
     onDelete: 'CASCADE',
-    as: 'u1',
+    as: 'friends',
 });
 
-
-User.belongsToMany(User, {
-    through : {
-        model: Friend_Tag,
-        unique: false,
+User.belongsToMany(Game, {
+    through: {
+      model: Ownership,
+      unique: false
     },
-    foreignKey: 'friend_id',
-    onDelete: 'CASCADE',
-    as: 'u2',
-})
+    as: 'owned_games'
+  });
 
-User.hasMany(Game, {
-    foreignKey: 'user_id',
-    onDelete: 'CASCADE'
-});
-
-Game.belongsTo(User, {
-    foreignKey: 'user_id',
-})
-
-module.exports = { User, Game, Friend_Tag };
+module.exports = { User, Game, Friendship, Ownership };
