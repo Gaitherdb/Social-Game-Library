@@ -1,10 +1,55 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Game, Ownership, Friendship } = require('../../models');
 
 // For Insomnia Testing: Gets all currently created users
 router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll();
+        res.status(200).json(userData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// Test get friendship
+// For Insomnia Testing: Gets all currently created users
+router.get('/friends/', async (req, res) => {
+    try {
+        const friendData = await Friendship.findAll();
+        res.status(200).json(friendData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// Insomnia Testing: Get all info of one user
+router.get('/:id', async (req, res) => {
+    try {
+        const userData = await User.findByPk(req.params.id, {
+            include:
+                [
+                    // Include their list of games
+                    {
+                        model: Game,
+                        through: { Ownership, attributes: [] },
+                        as: "owned_games",
+                    },
+                    // Include their list of friends
+                    {
+                        model: User,
+                        through: { Friendship, attributes: [] },
+                        as: "friends",
+                        //Include the games owned by the friend
+                        include: [
+                            {
+                                model: Game,
+                                through: { Ownership, attributes: [] },
+                                as: "owned_games",
+                            }
+                        ]
+                    }
+                ],
+        });
         res.status(200).json(userData);
     } catch (err) {
         res.status(500).json(err);

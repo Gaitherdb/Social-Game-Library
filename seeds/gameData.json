@@ -1,7 +1,7 @@
 [
     {
-      "name": "Skyrim",
-      "platform": "PC",
+      "name": "The Elder Scrolls V: Skyrim",
+      "platform": "Xbox 360",
       "beaten": false,
       "currently_playing": false,
       "rating":2
@@ -14,8 +14,8 @@
       "rating": 4
     },
     {
-      "name": "Darksouls",
-      "platform": "PS5",
+      "name": "Dark Souls",
+      "platform": "PS3",
       "beaten": true,
       "currently_playing": false,
       "rating": 3

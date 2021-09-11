@@ -1,5 +1,15 @@
 const router = require('express').Router();
-const { Game, User } = require('../../models');
+const { Game } = require('../../models');
+
+// Insomnia Testing: Get ll Games
+router.get('/', async (req, res) => {
+    try {
+        const gameData = await Game.findAll();
+        res.status(200).json(gameData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 // Get all games of the logged in user
 router.get('/', async (req, res) => {
@@ -28,6 +38,8 @@ router.get('/', async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+
 
 // Adding a game
 router.post('/', async (req, res) => {
