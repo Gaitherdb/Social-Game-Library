@@ -54,41 +54,44 @@
                         </label>
                     </div>
                     <div>
-                    <div class="row  ">
-                        <div class="position-relative">
-                            <button type="submit" id="submitGame" class="btn btn-primary btn-lg position-absolute bottom-0 start-50 translate-middle-x">Submit</button>
-                        </div>
-                        <div class="position-relative">
-                            <button type="button" id="cancelGame" class="btn btn-primary btn-lg position-absolute bottom-0 end-0">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{!-- modal popup if name isn't entered or platform wasn't selected --}}
-            <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content border border-4 border-danger">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Missing Content!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Please fill out the form accordingly.
+                        <div class="row  ">
+                            <div class="position-relative">
+                                <button type="submit" id="submitGame"
+                                    class="btn btn-primary btn-lg position-absolute bottom-0 start-50 translate-middle-x">Submit</button>
+                            </div>
+                            <div class="position-relative">
+                                <button type="button" id="cancelGame"
+                                    class="btn btn-primary btn-lg position-absolute bottom-0 end-0">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                {{!-- modal popup if name isn't entered or platform wasn't selected --}}
+                <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content border border-4 border-danger">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Missing Content!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Please fill out the form accordingly.
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </form>
     </div>
 
 
 
     <!-- This is the main row which contains the two columns -->
-    <div class="row row-cols-2 justify-content-center my-3">
+    <div class="row row-cols-3 justify-content-center my-3">
 
         <!-- Library Table -->
-        <div class="col-10 text-center">
+        <div class="col-8 text-center">
             <div class="container p-1">
                 <table class="table">
 
@@ -100,13 +103,16 @@
                             <th scope="col">Date Added</th>
                             <th scope="col">Beaten?</th>
                             <th scope="col">Currently Playing?</th>
+                            <th scope="col" class="d-none" id="cancelCol"></th>
+                            <th scope="col" class="d-none" id="deleteCol"></th>
                         </tr>
                     </thead>
 
                     <!-- The actual games -->
                     <tbody id="ownedGames">
-                        {{#if games.length}}
-                        {{#each games as |game|}}
+                        {{#each users as |user|}}
+                        {{#if user.owned_games.length}}
+                        {{#each user.owned_games as |game|}}
                         <tr class="userGames" id="{{game.id}}">
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
@@ -115,23 +121,26 @@
                             <td>{{game.currently_playing}}</td>
                         </tr>
                         {{!-- edit game form --}}
-                        <tr class="editGameForm" id="{{game.id}}" style="display:none">
-                            <td scope="row"><button>Cancel</button></th>
-                            <td><button>Delete</button></th>
+                        <tr class="editGameForm d-none" id="{{game.id}}">
+
                             <th><input type="text" class="" id="editName" value={{game.name}} /></th>
                             <td>{{game.platform}}</td>
                             <td>{{format_time game.date_added}}</td>
                             <td>{{game.beaten}}</td>
                             <td>{{game.currently_playing}}</td>
+                            <td><button>Cancel</button></td>
+                            <td><button>Delete</button></td>
                         </tr>
                         {{/each}}
                         {{/if}}
+                        {{/each}}
 
                     </tbody>
 
                 </table>
             </div>
         </div>
+
 
         <!-- Filter-Table controls -->
         <div class="col-2 text-center">

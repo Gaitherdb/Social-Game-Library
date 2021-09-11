@@ -10,12 +10,16 @@ window.addEventListener('DOMContentLoaded', function () {
 
         var element = event.target;
         var game_id = element.parentElement.id;
+        let cancelCol = document.getElementById("cancelCol")
+        let deleteCol = document.getElementById("deleteCol")
 
         for (let i = 0; i < editGameForm.length; i++) {
             if (Number(editGameForm[i].id) == `${game_id}`) {
-                if (editGameForm[i].style.display === "none") {
-                    editGameForm[i].style.display = "block";
-
+                if (editGameForm[i].classList.contains("d-none")) {
+                    
+                    editGameForm[i].classList.remove("d-none") 
+                    cancelCol.classList.remove("d-none")
+                    deleteCol.classList.remove("d-none")
                     for (let i = 0; i < userGames.length; i++) {
 
                         if (userGames[i].id == `${game_id}`) {
