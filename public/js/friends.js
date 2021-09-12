@@ -1,7 +1,6 @@
 console.log('test of friends js')
 
 const mainDiv = document.getElementById("friendlist")
-const friendEl = document.createElement("p")
 
 
 const myfunc = () => {
@@ -18,6 +17,7 @@ fetch('/api/friends')
       response.json().then(function(data) {
         console.log(data);
         data[0].friends.forEach(element => {
+            const friendEl = document.createElement("p")
             friendEl.textContent = element.name
             console.log(element.name)
             mainDiv.appendChild(friendEl)
