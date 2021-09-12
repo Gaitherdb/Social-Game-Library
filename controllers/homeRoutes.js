@@ -4,21 +4,7 @@ const { User, Game, Friendship, Ownership } = require('../models');
 
 router.get('/', async (req, res) => {
     try {
-        const friendData = await User.findAll({
-            include:
-                [
-                    {
-                        model: User,
-                        through: { Friendship, attributes: [] },
-                        as: "friends"
-            
-                    }
-                ],
-        });
-        const friends = friendData.map((user) => user.get({ plain: true }));
-        console.log(friends)
         res.render('homepage', {
-            friends,
             logged_in: req.session.logged_in
         });
     } catch (err) {

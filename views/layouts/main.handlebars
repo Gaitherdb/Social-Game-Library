@@ -91,10 +91,15 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div>
-                <h4 id = "fuck"></h4>
-                {{name}}
-
+            <div id = 'friendlist'>
+                
+                {{!-- {{#each data as |user|}}
+                {{#if user.friends.length}}
+                {{#each friends as |friend|}}
+                <h4>{{friend.name}}</h4>
+                {{/each}}
+                {{/if}}
+                {{/each}} --}}
             </div>
         </div>
     </div>
