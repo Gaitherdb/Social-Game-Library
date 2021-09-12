@@ -17,10 +17,13 @@ fetch('/api/friends')
       response.json().then(function(data) {
         console.log(data);
         data[0].friends.forEach(element => {
-            const friendEl = document.createElement("p")
+            const listItem = document.createElement("li")
+            const friendEl = document.createElement("a")
+            listItem.appendChild(friendEl)
             friendEl.textContent = element.name
             console.log(element.name)
-            mainDiv.appendChild(friendEl)
+            friendEl.setAttribute("href", '/profile/' + element.id)
+            mainDiv.appendChild(listItem)
         });
       });
     }
