@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const validator = require('validator');
 const { User, Game, Ownership, Friendship } = require('../../models');
 
 // Insomnia testing: Get all users and complete info for them
@@ -63,7 +64,7 @@ router.get('/test/:id', async (req, res) => {
                     }
                 ],
         });
-        
+
         res.status(200).json(userData);
     } catch (err) {
         res.status(500).json(err);
@@ -73,14 +74,27 @@ router.get('/test/:id', async (req, res) => {
 // Creates new User
 router.post('/', async (req, res) => {
     try {
-        const userData = await User.create(req.body);
+        // Check if email and password are valid
+        if (validator.isEmail(req.body.email) && validator.isStrongPassword(req.body.password)) {
+            const userData = await User.create(req.body);
 
-        req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true;
+            req.session.save(() => {
+                req.session.user_id = userData.id;
+                req.session.logged_in = true;
+                res.status(200).json(userData);
+            });
 
-            res.status(200).json(userData);
-        });
+            // If it isn't an email, throw an error
+        } else if (!(validator.isEmail(req.body.email))) {
+            res.statusMessage = "The email isn't good";
+            throw (err);
+
+            // If it isn't a strong password, throw an error
+        } else if (!(validator.isStrongPassword(req.body.password))) {
+            res.statusMessage = "The password isn't good";
+            throw (err);
+        }
+
     } catch (err) {
         res.status(400).json(err);
     }
