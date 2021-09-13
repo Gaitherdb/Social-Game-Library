@@ -74,18 +74,18 @@ router.get('/', withAuth, async (req, res) => {
 
 
 // Adding a game
-// router.post('/', withAuth, async (req, res) => {
-//     let userID = req.session.user_id;
-//     try {
-//         const gameData = await Game.create({
-//             ...req.body,
-//             user_id: userID
-//         });
+router.post('/', withAuth, async (req, res) => {
+    let userID = req.session.user_id;
+    try {
+        const gameData = await Game.create({
+            ...req.body,
+            user_id: userID
+        });
 
-//         res.status(200).json(gameData);
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+        res.status(200).json(gameData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 module.exports = router;
