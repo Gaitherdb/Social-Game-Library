@@ -92,7 +92,17 @@
         </div>
         <div class="offcanvas-body">
             <div>
-
+                <ul id = 'friendlist'>
+        
+                </ul>
+                
+                {{!-- {{#each data as |user|}}
+                {{#if user.friends.length}}
+                {{#each friends as |friend|}}
+                <h4>{{friend.name}}</h4>
+                {{/each}}
+                {{/if}}
+                {{/each}} --}}
             </div>
         </div>
     </div>
@@ -103,6 +113,7 @@
         crossorigin="anonymous"></script>
 
     <script src="/js/login.js"></script>
+    <script src="/js/friends.js"></script>
 </body>
 
 </html>
