@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Game, User } = require('../../models');
+const { Game, User, Ownership } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Get all games of the logged in user
@@ -71,21 +71,24 @@ router.get('/', withAuth, async (req, res) => {
     // }
 });
 
+// Adding a new game to the logged in user's library
+router.post('/', async (req, res) => {
+    try {
+        // Create the game
+        const gameData = await Game.create({
+            ...req.body,
+        });
 
+        // Create the ownership between new game and logged in user
+        const ownerData = await Ownership.create({
+            game_id: gameData.id, 
+            user_id: req.session.user_id,
+          });
 
-// Adding a game
-// router.post('/', withAuth, async (req, res) => {
-//     let userID = req.session.user_id;
-//     try {
-//         const gameData = await Game.create({
-//             ...req.body,
-//             user_id: userID
-//         });
-
-//         res.status(200).json(gameData);
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+        res.status(200).json(ownerData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 module.exports = router;
