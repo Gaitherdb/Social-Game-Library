@@ -65,11 +65,11 @@ router.post('/', async (req, res) => {
     }
 });
 
+//clicking the delete btn in the edit game form will delete the game and the relationship between the user & the game
 router.delete('/:id', withAuth, async (req, res) => {
     try { 
         console.log(req.session.user_id)
         var game_id = req.params.id;
-        console.log(game_id)
       
       const gameData = await Game.destroy({
         where: {
