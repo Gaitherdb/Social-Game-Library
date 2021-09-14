@@ -92,8 +92,8 @@ router.post('/request/:id', async (req, res) => {
     try {
         // Create the friendship
         const friendshipData = await Friendship.create({
-            user_id: req.session.user_id,
-            friend_id: req.params.id
+            user_id: req.params.id,
+            friend_id: req.session.user_id 
         });
 
         // Delete the request once added
