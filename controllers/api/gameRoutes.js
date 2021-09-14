@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Game, User, Ownership } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// Get all games of the logged in user
+// Insomnia Testing: Get all games of the logged in user
 router.get('/', withAuth, async (req, res) => {
     try {
         const userID = req.session.user_id;
@@ -21,11 +21,13 @@ router.get('/', withAuth, async (req, res) => {
                         through: { Ownership, attributes: [] },
                         as: "owned_games",
                     },
+
                     // Include their list of friends
                     {
                         model: User,
                         through: { Friendship, attributes: [] },
                         as: "friends",
+
                         //Include the games owned by the friend
                         include: [
                             {
@@ -37,11 +39,7 @@ router.get('/', withAuth, async (req, res) => {
                     }
                 ],
         });
-        const user = userData.get({ plain: true });
-        res.render('profile', {
-            ...user,
-            logged_in: req.session.logged_in
-        });
+        res.status(200).json(userData)
     } catch (err) {
         res.status(500).json(err);
     }

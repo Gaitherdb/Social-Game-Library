@@ -1,7 +1,4 @@
-console.log('test of friends js')
-
-const mainDiv = document.getElementById("friendlist")
-
+const mainDiv = document.getElementById("friendlist");
 
 const myfunc = () => {
 fetch('/api/friends')
@@ -15,7 +12,6 @@ fetch('/api/friends')
 
       // Examine the text in the response
       response.json().then(function(data) {
-        console.log(data);
         data[0].friends.forEach(element => {
             const listItem = document.createElement("li")
             const friendEl = document.createElement("a")
