@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
         var element = event.target;
         var game_id = element.parentElement.id;
-        //empy columns for space for the buttons
+        //empty columns for space for the buttons
         let cancelCol = document.getElementById("cancelCol")
         let deleteCol = document.getElementById("deleteCol")
 
@@ -27,7 +27,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
                         if (userGames[i].id == `${game_id}`) {
                             userGames[i].classList.add("d-none");
-
                         }
                     }
                 }
@@ -40,17 +39,9 @@ window.addEventListener('DOMContentLoaded', function () {
         var deleteGameBtn = document.querySelectorAll('.deleteGameBtn');
         var element = event.target;
         let game_id = element.parentElement.parentElement.id;
-        console.log("game_id")
-        console.log(game_id)
         if (element.matches(".cnlEditBtn")) {
-            console.log('hi')
             for(i=0; i < cancelEditBtn.length; i++){
-                console.log('bye')
-                console.log(cancelEditBtn[i].dataset.id);
-        
                 if(cancelEditBtn[i].dataset.id == `${game_id}`){
-                    console.log("noooo")
-                    console.log(editGameForm[i])
                     editGameForm[i].classList.add('d-none')
                     userGames[i].classList.remove('d-none')
 
