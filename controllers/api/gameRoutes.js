@@ -65,4 +65,32 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.delete('/:id', withAuth, async (req, res) => {
+    try { 
+        console.log(req.session.user_id)
+        var game_id = req.params.id;
+        console.log(game_id)
+      
+      const gameData = await Game.destroy({
+        where: {
+          id: game_id,
+        },
+      });
+      const ownerData = await Ownership.destroy({
+        where: {
+          game_id: game_id,
+          user_id: req.session.user_id,
+        },
+      });
+      if (!ownerData) {
+        res.status(404).json({ message: 'You do not own this game!' });
+        return;
+      }
+  
+      res.status(200).json(ownerData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
 module.exports = router;
