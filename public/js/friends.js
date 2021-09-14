@@ -32,7 +32,7 @@ printFriends();
 
 const getuserId = async (event) => {
   event.preventDefault();
-  console.log('friend req btn test')
+  // console.log('friend req btn test')
   const inputEmail = document.querySelector('#exampleInputEmail1').value.trim();
 
   fetch('/api/users/test/')
@@ -46,11 +46,11 @@ const getuserId = async (event) => {
 
       // Examine the text in the response
       response.json().then(function(data) {
-        console.log(data)
+        // console.log(data)
         data.forEach(el => {
 
-          console.log(el.email)
-          console.log(inputEmail)
+          // console.log(el.email)
+          // console.log(inputEmail)
 
           if (el.email===inputEmail){
             newFormHandler(el.id)
@@ -64,7 +64,7 @@ const getuserId = async (event) => {
 const newFormHandler = async (id) => {
   
   // const destination_user_id = document.querySelector('#exampleInputEmail1').value.trim();
-  console.log(id)
+  // console.log(id)
 
   const destination_user_id = id
 
@@ -76,7 +76,7 @@ const newFormHandler = async (id) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(JSON.stringify({destination_user_id}))
+    // console.log(JSON.stringify({destination_user_id}))
 
     if (response.ok) {
       console.log(response)
