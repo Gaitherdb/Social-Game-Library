@@ -45,30 +45,6 @@ router.get('/', withAuth, async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-    // try {
-    //     if (req.session.logged_in) {
-    //         const userID = req.session.user_id;
-    //         const gameData = await Game.findAll({
-    //             where: {
-    //                 user_id: userID
-    //             },
-    //             order: [
-    //                 ['id', 'DESC'],
-    //             ],
-    //         });
-    //         const games = gameData.map((game) => game.get({ plain: true }));
-    //         res.render('library', {
-    //             games,
-    //             logged_in: req.session.logged_in
-    //         });
-    //     }
-    //     else {
-    //         res.render('login');
-    //     }
-    // } catch (err) {
-    //     console.log(err);
-    //     res.status(500).json(err);
-    // }
 });
 
 // Adding a new game to the logged in user's library
