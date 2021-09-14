@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const userGames = document.querySelectorAll('.userGames');
 
 
-    //Event listener to click and access the edit form for games in the library
+    // Clicking an entry will access the edit form for games in the library
     gameList.addEventListener("click", function (event) {
 
         var element = event.target;
@@ -39,16 +39,18 @@ window.addEventListener('DOMContentLoaded', function () {
     gameList.addEventListener("click", function (event) {
         var cancelEditBtn = document.querySelectorAll('.cnlEditBtn');
 
-        var element = event.target;
+        let element = event.target;
         let game_id = element.parentElement.parentElement.id;
         if (element.matches(".cnlEditBtn")) {
             for (i = 0; i < cancelEditBtn.length; i++) {
                 if (cancelEditBtn[i].dataset.id == `${game_id}`) {
                     editGameForm[i].classList.add('d-none')
                     userGames[i].classList.remove('d-none')
-
                 }
             }
+            cancelCol.classList.add("d-none")
+            deleteCol.classList.add("d-none")
+            saveCol.classList.add("d-none")
         }
     })
 
@@ -78,11 +80,10 @@ window.addEventListener('DOMContentLoaded', function () {
         if (element.matches(".deleteGameBtn")) {
             for (i = 0; i < deleteGameBtn.length; i++) {
                 if (deleteGameBtn[i].dataset.id == `${game_id}`) {
-                    console.log("delete")
                     const response = await fetch(`/api/games/${game_id}`, {
                         method: 'DELETE',
                     });
-        
+
                     if (response.ok) {
                         // If successful, refresh the page
                         document.location.reload();
@@ -93,11 +94,10 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
-   
+
     //fetches a post request if the form is filled out, otherwise alerts a modal
     const postGameHandler = async (event) => {
         event.preventDefault();
-
         const name = document.querySelector('#gameName').value;
         const platform = document.querySelector('#platform').value;
         var beaten = document.querySelector('#beaten').checked;
