@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', function () {
         //empty columns for space for the buttons
         let cancelCol = document.getElementById("cancelCol")
         let deleteCol = document.getElementById("deleteCol")
+        let saveCol = document.getElementById("saveCol")
 
         for (let i = 0; i < editGameForm.length; i++) {
             if (Number(editGameForm[i].id) == `${game_id}`) {
@@ -23,6 +24,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     editGameForm[i].classList.remove("d-none")
                     cancelCol.classList.remove("d-none")
                     deleteCol.classList.remove("d-none")
+                    saveCol.classList.remove("d-none")
                     for (let i = 0; i < userGames.length; i++) {
 
                         if (userGames[i].id == `${game_id}`) {
@@ -36,12 +38,12 @@ window.addEventListener('DOMContentLoaded', function () {
     //clicking the cancel button on the edit form, hides the form 
     gameList.addEventListener("click", function (event) {
         var cancelEditBtn = document.querySelectorAll('.cnlEditBtn');
-        var deleteGameBtn = document.querySelectorAll('.deleteGameBtn');
+
         var element = event.target;
         let game_id = element.parentElement.parentElement.id;
         if (element.matches(".cnlEditBtn")) {
-            for(i=0; i < cancelEditBtn.length; i++){
-                if(cancelEditBtn[i].dataset.id == `${game_id}`){
+            for (i = 0; i < cancelEditBtn.length; i++) {
+                if (cancelEditBtn[i].dataset.id == `${game_id}`) {
                     editGameForm[i].classList.add('d-none')
                     userGames[i].classList.remove('d-none')
 
@@ -49,6 +51,7 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     })
+
 
     //clicking Add Game button will show form and hide the button
     addGameBtn.addEventListener("click", function () {
@@ -67,6 +70,30 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     })
 
+    //clicking delete btn on the edit form, deletes the entry
+    const deleteGameEntry = async (event) => {
+        var deleteGameBtn = document.querySelectorAll('.deleteGameBtn');
+        var element = event.target;
+        let game_id = element.parentElement.parentElement.id;
+        if (element.matches(".deleteGameBtn")) {
+            for (i = 0; i < deleteGameBtn.length; i++) {
+                if (deleteGameBtn[i].dataset.id == `${game_id}`) {
+                    console.log("delete")
+                    const response = await fetch(`/api/games/${game_id}`, {
+                        method: 'DELETE',
+                    });
+        
+                    if (response.ok) {
+                        // If successful, refresh the page
+                        document.location.reload();
+                    } else {
+                        alert(response.statusText);
+                    }
+                }
+            }
+        }
+    }
+   
     //fetches a post request if the form is filled out, otherwise alerts a modal
     const postGameHandler = async (event) => {
         event.preventDefault();
@@ -104,4 +131,8 @@ window.addEventListener('DOMContentLoaded', function () {
     document
         .querySelector('#addGameForm')
         .addEventListener('submit', postGameHandler);
+
+    document
+        .querySelector('#ownedGames')
+        .addEventListener('click', deleteGameEntry);
 })
