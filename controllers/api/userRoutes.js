@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const validator = require('validator');
-const { User, Game, Ownership, Friendship } = require('../../models');
+const { User, Game, Ownership, Friendship, Request } = require('../../models');
 
 // Insomnia testing: Get all users and complete info for them
 router.get('/test/', async (req, res) => {
@@ -70,6 +70,63 @@ router.get('/test/:id', async (req, res) => {
         res.status(500).json(err);
     }
 })
+
+// Insomnia testing: Get all requests that are sent to a user
+router.get('/request/:id', async (req, res) => {
+    try {
+        const userData = await User.findByPk(req.params.id);
+        const requestData = await Request.findAll({
+            where: {
+                destination_user_id: userData.id,
+            }
+        })
+
+        res.status(200).json(requestData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// Approve a friend request
+router.post('/request/:id', async (req, res) => {
+    try {
+        // Create the friendship
+        const friendshipData = await Friendship.create({
+            user_id: req.session.user_id,
+            friend_id: req.params.id
+        });
+
+        // Delete the request once added
+        const requestData = await Request.destroy({
+            where: {
+                origin_user_id: req.params.id,
+                destination_user_id: req.session.user_id,
+            },
+        });
+
+        res.status(200).json(friendshipData)
+        
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Decline a friend request
+router.delete('/request/:id', async (req, res) => {
+    try {
+        const requestData = await Request.destroy({
+            where: {
+                origin_user_id: req.params.id,
+                destination_user_id: req.session.user_id,
+            },
+        });
+
+        res.status(200).json(requestData)
+        
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 // Creates new User
 router.post('/', async (req, res) => {
@@ -145,5 +202,6 @@ router.post('/logout', async (req, res) => {
         res.status(404).end();
     }
 });
+
 
 module.exports = router;

@@ -2,6 +2,7 @@ const User = require('./User');
 const Game = require('./Game');
 const Friendship = require('./Friendship')
 const Ownership = require('./Ownership')
+const Request = require('./Request')
 
 User.belongsToMany(User, {
     through: {
@@ -20,4 +21,4 @@ User.belongsToMany(Game, {
     as: 'owned_games'
   });
 
-module.exports = { User, Game, Friendship, Ownership };
+module.exports = { User, Game, Friendship, Ownership, Request };
