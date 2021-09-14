@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const withAuth = require('../utils/auth');
-const { User, Game, Friendship, Ownership } = require('../models');
+const { User, Game, Friendship, Ownership, Request } = require('../models');
+const { request } = require('express');
 
 router.get('/', async (req, res) => {
     try {
@@ -54,7 +55,33 @@ router.get('/library/', withAuth, async (req, res) => {
 
 router.get('/social', withAuth, async (req, res) => {
     try {
+        const requestData = await Request.findAll({
+            where: {
+                destination_user_id: req.session.user_id,
+            },
+        })
+
+        console.log(req.session.user_id);
+        console.log(requestData);
+
+        const requests = requestData.map((request) => request.get({ plain: true }));
+
+        let user_ids = [];
+
+        requests.map((request) => user_ids.push(request.origin_user_id))
+
+        const userData = await User.findAll({
+            where: {
+                id: user_ids
+            }
+        })
+
+        const senders = userData.map((user) => user.get({ plain: true }));
+
+        console.log(senders);
+
         res.render('social', {
+            senders,
             logged_in: req.session.logged_in
         });
     } catch (err) {
@@ -106,6 +133,7 @@ router.get('/profile/:id', async (req, res) => {
                     }
                 ],
         });
+
         const user = userData.get({ plain: true });
         res.render('profile', {
             ...user,

@@ -1,10 +1,11 @@
 const sequelize = require('../config/connection');
-const { User, Game, Ownership, Friendship } = require('../models');
+const { User, Game, Ownership, Friendship, Request } = require('../models');
 
 const userData = require('./userData.json');
 const gameData = require('./gameData.json');
 const ownershipData = require('./ownershipData.json');
 const friendshipData = require('./friendshipData.json');
+const requestData = require('./requestData.json');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
@@ -25,6 +26,11 @@ const seedDatabase = async () => {
   });
 
   const friendship = await Friendship.bulkCreate(friendshipData, {
+    individualHooks: true,
+    returning: true,
+  });
+
+  const request = await Request.bulkCreate(requestData, {
     individualHooks: true,
     returning: true,
   });

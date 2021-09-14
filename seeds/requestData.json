@@ -1,0 +1,26 @@
+[
+    {
+        "origin_user_id": 1,
+        "destination_user_id": 2
+    },
+    {
+        "origin_user_id": 1,
+        "destination_user_id": 3
+    },
+    {
+        "origin_user_id": 2,
+        "destination_user_id": 3
+    },
+    {
+        "origin_user_id": 2,
+        "destination_user_id": 1
+    },
+    {
+        "origin_user_id": 3,
+        "destination_user_id": 1
+    },
+    {
+        "origin_user_id": 3,
+        "destination_user_id": 2
+    }
+]

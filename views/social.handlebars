@@ -8,69 +8,36 @@
     <div class="row row-cols-1 justify-content-center my-3">
         <div class="col-md-auto text-center">
             <div class="container p-5">
-                <h2>Your Friends</h2>
-                <p class="text-break fs-5 text-muted">On this page, you can check out what games your friends have been adding to the collection and playing recently.</p>
+                <h2>Social</h2>
+                <p class="text-break fs-5 text-muted">You can use this page to approve friend requests.</p>
             </div>
         </div>
     </div>
 
-    <!-- This is the main row which contains the two columns -->
+    <!-- This is the main row which just contains the table of all friend requests -->
     <div class="row row-cols-2 justify-content-center my-3">
 
-        <!-- Friends List -->
-        <div class="col-2 text-center border">
+        <!-- Friend's Library Table -->
+        <div class="col-12 text-center">
             <div class="container p-1">
-                Friends List
-                <ul class="m-2 list-group">
-                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                        None
-                    </button>
-                    {{#if friends.length}}
-                    {{#each friends as |friend|}}
-                    <button type="button" class="list-group-item list-group-item-action">{{friend.name}}</button>
+                <ul class="list-group">
+                    
+                    <!-- Display every friend request in a list -->
+                    {{#each senders as |sender|}}
+                    <li class="list-group-item">{{sender.name}} wants to be your friend
+
+                        <!-- Approval button -->
+                        <button type="button" class="btn btn-outline-primary" data-postNum="{{sender.id}}" onclick="approveReq(this)">Approve</button>
+
+                        <!-- Decline button -->
+                        <button type="button" class="btn btn-outline-primary" data-postNum="{{sender.id}}" onclick="declineReq(this)">Decline</button>
+                    </li>
                     {{/each}}
-                    {{/if}}
+
                 </ul>
             </div>
         </div>
-
-        <!-- Friend's Library Table -->
-        <div class="col-10 text-center">
-            <div class="container p-1">
-                <table class="table">
-
-                    <!-- Heading row -->
-                    <thead>
-                        <tr>
-                            <th scope="col">Game Title</th>
-                            <th scope="col">Platform</th>
-                            <th scope="col">Date Added</th>
-                            <th scope="col">Beaten?</th>
-                            <th scope="col">Currently Playing?</th>
-                        </tr>
-                    </thead>
-
-                    <!-- Selected friend's actual games -->
-                    <tbody>
-                        {{#if friends.length}}
-                        {{#each friends as |friend|}}
-                        <tr>
-                            {{#each friend.games as |game|}}
-                            <th scope="row">{{game.title}}</th>
-                            <td>{{game.platform}}</td>
-                            <td>{{game.date_added}}</td>
-                            <td>{{game.beaten}}</td>
-                            {{/each}}
-                        </tr>
-                        {{/each}}
-                        {{/if}}
-
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-
     </div>
-
 </div>
+
+<script src="./js/friendReq.js"></script>
