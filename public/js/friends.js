@@ -18,6 +18,7 @@ fetch('/api/friends')
         console.log(data);
         data[0].friends.forEach(element => {
             const listItem = document.createElement("li")
+            listItem.setAttribute("class", "list-group-item")
             const friendEl = document.createElement("a")
             listItem.appendChild(friendEl)
             friendEl.textContent = element.name
