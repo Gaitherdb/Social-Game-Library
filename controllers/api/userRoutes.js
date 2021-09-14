@@ -87,16 +87,42 @@ router.get('/request/:id', async (req, res) => {
     }
 })
 
-// Insomnia testing: Approve a friend request
+// Approve a friend request
 router.post('/request/:id', async (req, res) => {
     try {
-        const requestData = await Request.findByPk(req.params.id);
+        // Create the friendship
         const friendshipData = await Friendship.create({
-            user_id: requestData.origin_user_id,
-            friend_id: requestData.destination_user_id
+            user_id: req.session.user_id,
+            friend_id: req.params.id
         });
 
-        res.status(200).json(friendshipData);
+        // Delete the request once added
+        const requestData = await Request.destroy({
+            where: {
+                origin_user_id: req.params.id,
+                destination_user_id: req.session.user_id,
+            },
+        });
+
+        res.status(200).json(friendshipData)
+        
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Decline a friend request
+router.delete('/request/:id', async (req, res) => {
+    try {
+        const requestData = await Request.destroy({
+            where: {
+                origin_user_id: req.params.id,
+                destination_user_id: req.session.user_id,
+            },
+        });
+
+        res.status(200).json(requestData)
+        
     } catch (err) {
         res.status(500).json(err);
     }
@@ -176,5 +202,6 @@ router.post('/logout', async (req, res) => {
         res.status(404).end();
     }
 });
+
 
 module.exports = router;

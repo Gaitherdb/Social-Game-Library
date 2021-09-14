@@ -25,10 +25,10 @@ const seedDatabase = async () => {
     returning: true,
   });
 
-  const friendship = await Friendship.bulkCreate(friendshipData, {
-    individualHooks: true,
-    returning: true,
-  });
+  // const friendship = await Friendship.bulkCreate(friendshipData, {
+  //   individualHooks: true,
+  //   returning: true,
+  // });
 
   const request = await Request.bulkCreate(requestData, {
     individualHooks: true,

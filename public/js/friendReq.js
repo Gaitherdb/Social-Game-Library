@@ -2,9 +2,9 @@
 async function approveReq(button) {
     event.preventDefault();
 
-    const postNum = button.dataset.postNum;
+    const senderID = button.dataset.senderid;
 
-    const response = await fetch(`/api/user/request/${postNum}`, {
+    const response = await fetch(`/api/users/request/${senderID}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
     });
@@ -17,12 +17,12 @@ async function approveReq(button) {
 }
 
 // Delete the Request by their id
-async function declineReq() {
+async function declineReq(button) {
     event.preventDefault();
 
-    const postNum = button.dataset.postNum;
+    const senderID = button.dataset.senderid;
 
-    const response = await fetch(`/api/user/request/${postNum}`, {
+    const response = await fetch(`/api/users/request/${senderID}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     });

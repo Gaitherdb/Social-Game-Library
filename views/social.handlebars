@@ -27,10 +27,10 @@
                     <li class="list-group-item">{{sender.name}} wants to be your friend
 
                         <!-- Approval button -->
-                        <button type="button" class="btn btn-outline-primary" data-postNum="{{sender.id}}" onclick="approveReq(this)">Approve</button>
+                        <button type="button" class="btn btn-outline-primary" data-senderID="{{sender.id}}" onclick="approveReq(this)">Approve</button>
 
                         <!-- Decline button -->
-                        <button type="button" class="btn btn-outline-primary" data-postNum="{{sender.id}}" onclick="declineReq(this)">Decline</button>
+                        <button type="button" class="btn btn-outline-primary" data-senderID="{{sender.id}}" onclick="declineReq(this)">Decline</button>
                     </li>
                     {{/each}}
 
