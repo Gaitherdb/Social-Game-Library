@@ -6,32 +6,51 @@ window.addEventListener('DOMContentLoaded', function () {
     const editGameForm = document.querySelectorAll('.editGameForm');
     const userGames = document.querySelectorAll('.userGames');
 
+
+    //Event listener to click and access the edit form for games in the library
     gameList.addEventListener("click", function (event) {
 
         var element = event.target;
         var game_id = element.parentElement.id;
+        //empty columns for space for the buttons
         let cancelCol = document.getElementById("cancelCol")
         let deleteCol = document.getElementById("deleteCol")
 
         for (let i = 0; i < editGameForm.length; i++) {
             if (Number(editGameForm[i].id) == `${game_id}`) {
                 if (editGameForm[i].classList.contains("d-none")) {
-                    
-                    editGameForm[i].classList.remove("d-none") 
+
+                    editGameForm[i].classList.remove("d-none")
                     cancelCol.classList.remove("d-none")
                     deleteCol.classList.remove("d-none")
                     for (let i = 0; i < userGames.length; i++) {
 
                         if (userGames[i].id == `${game_id}`) {
-                            userGames[i].style.display = "none";
-
+                            userGames[i].classList.add("d-none");
                         }
                     }
                 }
             }
         }
     })
+    //clicking the cancel button on the edit form, hides the form 
+    gameList.addEventListener("click", function (event) {
+        var cancelEditBtn = document.querySelectorAll('.cnlEditBtn');
+        var deleteGameBtn = document.querySelectorAll('.deleteGameBtn');
+        var element = event.target;
+        let game_id = element.parentElement.parentElement.id;
+        if (element.matches(".cnlEditBtn")) {
+            for(i=0; i < cancelEditBtn.length; i++){
+                if(cancelEditBtn[i].dataset.id == `${game_id}`){
+                    editGameForm[i].classList.add('d-none')
+                    userGames[i].classList.remove('d-none')
 
+                }
+            }
+        }
+    })
+
+    //clicking Add Game button will show form and hide the button
     addGameBtn.addEventListener("click", function () {
         if (addGameForm.style.display === "none") {
             addGameForm.style.display = "block";
@@ -39,7 +58,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-
+    //hitting the cancel button on the form, hides the form and brings back add game button
     cancelBtn.addEventListener("click", function () {
 
         if (addGameForm.style.display === "block") {
@@ -48,6 +67,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     })
 
+    //fetches a post request if the form is filled out, otherwise alerts a modal
     const postGameHandler = async (event) => {
         event.preventDefault();
 

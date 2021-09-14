@@ -141,14 +141,13 @@
                         </tr>
                         {{!-- edit game form --}}
                         <tr class="editGameForm d-none" id="{{game.id}}">
-
                             <th><input type="text" class="" id="editName" value={{game.name}} /></th>
                             <td>{{game.platform}}</td>
                             <td>{{format_time game.date_added}}</td>
                             <td>{{game.beaten}}</td>
                             <td>{{game.currently_playing}}</td>
-                            <td><button>Cancel</button></td>
-                            <td><button>Delete</button></td>
+                            <td><button class="cnlEditBtn" data-id="{{game.id}}">Cancel</button></td>
+                            <td><button class="deleteGameBtn" data-id="{{game.id}}">Delete</button></td>
                         </tr>
                         {{/each}}
                         {{/if}}
