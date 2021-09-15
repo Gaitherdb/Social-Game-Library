@@ -118,9 +118,9 @@
                         <tr>
                             <th scope="col">Game Title</th>
                             <th scope="col">Platform</th>
-                            <th scope="col">Date Added</th>
                             <th scope="col">Beaten?</th>
                             <th scope="col">Currently Playing?</th>
+                            <th scope="col">Date Added</th>
                             <th scope="col" class="d-none" id="cancelCol"></th>
                             <th scope="col" class="d-none" id="deleteCol"></th>
                             <th scope="col" class="d-none" id="saveCol"></th>
@@ -135,9 +135,9 @@
                         <tr class="userGames" id="{{game.id}}">
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
-                            <td>{{format_time game.date_added}}</td>
                             <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
                             <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
+                            <td>{{format_time game.date_added}}</td>
                         </tr>
                         {{!-- edit game form --}}
                         <tr class="editGameForm d-none" id="{{game.id}}">
@@ -156,7 +156,6 @@
                                     <option value="Wii U">Wii U</option>
                                     <option value="Wii">Wii</option>
                                 </select></td>
-                            <td>{{format_time game.date_added}}</td>
                             <td><select class="form-select" id="editBeaten" aria-label="Is Betean?">
                                 <option value="{{game.beaten}}" selected>{{#if game.beaten}}Yes{{else}}No{{/if}}</option>
                                 <option value="true">Yes</option>
@@ -167,6 +166,7 @@
                                 <option value="true">Yes</option>
                                 <option value="false">No</option>
                             </select></td>
+                            <td>{{format_time game.date_added}}</td>
                             <td><button class="cnlEditBtn" data-id="{{game.id}}">Cancel</button></td>
                             <td><button class="deleteGameBtn" data-id="{{game.id}}">Delete</button></td>
                             <td><button class="saveGameBtn" data-id="{{game.id}}">Save</button></td>
