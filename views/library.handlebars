@@ -136,8 +136,8 @@
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
                             <td>{{format_time game.date_added}}</td>
-                            <td>{{game.beaten}}</td>
-                            <td>{{game.currently_playing}}</td>
+                            <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
+                            <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
                         </tr>
                         {{!-- edit game form --}}
                         <tr class="editGameForm d-none" id="{{game.id}}">
@@ -158,14 +158,14 @@
                                 </select></td>
                             <td>{{format_time game.date_added}}</td>
                             <td><select class="form-select" id="editBeaten" aria-label="Is Betean?">
-                                <option value="{{game.beaten}}" selected>{{game.beaten}}</option>
-                                <option value="true">True</option>
-                                <option value="false">False</option>
+                                <option value="{{game.beaten}}" selected>{{#if game.beaten}}Yes{{else}}No{{/if}}</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
                             </select></td>
                             <td><select class="form-select" id="editCurrentlyPlaying" aria-label="Currently Playing?">
-                                <option value="{{game.currently_playing}}" selected>{{game.currently_playing}}</option>
-                                <option value="true">True</option>
-                                <option value="false">False</option>
+                                <option value="{{game.currently_playing}}" selected>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
                             </select></td>
                             <td><button class="cnlEditBtn" data-id="{{game.id}}">Cancel</button></td>
                             <td><button class="deleteGameBtn" data-id="{{game.id}}">Delete</button></td>
