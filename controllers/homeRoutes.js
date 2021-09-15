@@ -4,10 +4,39 @@ const { User, Game, Friendship, Ownership, Request } = require('../models');
 const { request } = require('express');
 
 router.get('/', async (req, res) => {
+
     try {
-        res.render('homepage', {
-            logged_in: req.session.logged_in
+        const list = await Friendship.findAll({
+            where: {user_id: req.session.user_id}
+        })
+        res.status(200).json(list)
+        console.log(list)
+    } catch(err){
+        res.status(500).json(err);
+    }
+
+    try {
+
+        const feedData = await Ownership.findAll({
+            where: {user_id: [1,2]},
+            order: [['id', 'desc']]
+            // include: [
+            //     {
+            //         model: User,
+            //         through: {Ownership},
+            //         on: 'user_id'
+                
+            //     }
+            // ]
         });
+
+        const data = feedData.map((user) => user.get({ plain: true }));
+        console.log(data)
+        res.status(200).json(feedData);
+        // res.render('homepage', {
+        //     data,
+        //     logged_in: req.session.logged_in
+        // });
     } catch (err) {
         res.status(500).json(err);
     }
@@ -135,6 +164,11 @@ router.get('/profile/:id', async (req, res) => {
         });
 
         const user = userData.get({ plain: true });
+        if(user.friends.length){
+            friends.array.forEach(element => {
+                
+            });
+        }
         res.render('profile', {
             ...user,
             logged_in: req.session.logged_in
