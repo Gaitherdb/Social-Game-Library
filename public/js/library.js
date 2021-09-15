@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const userGames = document.querySelectorAll('.userGames');
 
 
-    //Event listener to click and access the edit form for games in the library
+    // Clicking an entry will access the edit form for games in the library
     gameList.addEventListener("click", function (event) {
 
         var element = event.target;
@@ -39,16 +39,18 @@ window.addEventListener('DOMContentLoaded', function () {
     gameList.addEventListener("click", function (event) {
         var cancelEditBtn = document.querySelectorAll('.cnlEditBtn');
 
-        var element = event.target;
+        let element = event.target;
         let game_id = element.parentElement.parentElement.id;
         if (element.matches(".cnlEditBtn")) {
             for (i = 0; i < cancelEditBtn.length; i++) {
                 if (cancelEditBtn[i].dataset.id == `${game_id}`) {
                     editGameForm[i].classList.add('d-none')
                     userGames[i].classList.remove('d-none')
-
                 }
             }
+            cancelCol.classList.add("d-none")
+            deleteCol.classList.add("d-none")
+            saveCol.classList.add("d-none")
         }
     })
 
@@ -78,26 +80,58 @@ window.addEventListener('DOMContentLoaded', function () {
         if (element.matches(".deleteGameBtn")) {
             for (i = 0; i < deleteGameBtn.length; i++) {
                 if (deleteGameBtn[i].dataset.id == `${game_id}`) {
-                    console.log("delete")
-                    const response = await fetch(`/api/games/${game_id}`, {
+                    const deleteGameData = await fetch(`/api/games/${game_id}`, {
                         method: 'DELETE',
                     });
-        
-                    if (response.ok) {
+
+                    if (deleteGameData.ok) {
                         // If successful, refresh the page
                         document.location.reload();
                     } else {
-                        alert(response.statusText);
+                        alert(deleteGameData.statusText);
                     }
                 }
             }
         }
     }
-   
+    //clicking the save btn in the game edit form will update any changes made to the entry
+    const editGame = async (event) => {
+        var element = event.target;
+        var game_id = element.parentElement.parentElement.id;
+        var gameName = document.querySelectorAll('#editName');
+        var gamePlatform = document.querySelectorAll('#editPlatform');
+        var gameBeaten = document.querySelectorAll('#editBeaten');
+        var gameCurrentlyPlaying = document.querySelectorAll('#editCurrentlyPlaying');
+        var saveGameBtn = document.querySelectorAll('.saveGameBtn')
+
+
+        if (element.matches('.saveGameBtn')) {
+            for (i = 0; i < saveGameBtn.length; i++) {
+                if (saveGameBtn[i].dataset.id == `${game_id}`) {
+                    let name = gameName[i].value;
+                    let platform = gamePlatform[i].value;
+                    let beaten = gameBeaten[i].value;
+                    let currently_playing = gameCurrentlyPlaying[i].value;
+                    
+                    const editGameData = await fetch(`/api/games/${game_id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ name, platform, beaten, currently_playing }),
+                        headers: { 'Content-Type': 'application/json' },
+                    });
+                    if (editGameData.ok) {
+                        document.location.reload();
+                    } else {
+                        alert(editGameData.statusText);
+                    }
+                }
+            }
+
+        }
+    }
+
     //fetches a post request if the form is filled out, otherwise alerts a modal
     const postGameHandler = async (event) => {
         event.preventDefault();
-
         const name = document.querySelector('#gameName').value;
         const platform = document.querySelector('#platform').value;
         var beaten = document.querySelector('#beaten').checked;
@@ -107,17 +141,17 @@ window.addEventListener('DOMContentLoaded', function () {
 
         if (name && platform != "Platform") {
             // Send a POST request to the API endpoint
-            const response = await fetch('/api/games', {
+            const postGameData = await fetch('/api/games', {
                 method: 'POST',
                 body: JSON.stringify({ name, platform, beaten, currently_playing }),
                 headers: { 'Content-Type': 'application/json' },
             });
 
-            if (response.ok) {
+            if (postGameData.ok) {
                 // If successful, refresh the page
                 document.location.reload();
             } else {
-                alert(response.statusText);
+                alert(postGameData.statusText);
             }
         } else {
             errorModal.style.display = "block";
@@ -135,4 +169,8 @@ window.addEventListener('DOMContentLoaded', function () {
     document
         .querySelector('#ownedGames')
         .addEventListener('click', deleteGameEntry);
+
+    document
+        .querySelector('#ownedGames')
+        .addEventListener('click', editGame);
 })
