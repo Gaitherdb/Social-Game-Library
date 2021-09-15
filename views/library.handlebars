@@ -97,13 +97,12 @@
             <div class="container p-1">
                 Filter By:
                 <ul class="m-2 list-group">
-                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                        None
-                    </button>
-
-                    <button type="button" class="list-group-item list-group-item-action">Currently Playing</button>
-                    <button type="button" class="list-group-item list-group-item-action">Beaten</button>
-                    <button type="button" class="list-group-item list-group-item-action">Platform</button>
+                   
+                    <form method="get" action="/library/"><button type="submit" class="list-group-item list-group-item-action {{f_none}}">None</button></form>
+                    <form method="get" action="/library/currently_playing"><button type="submit" class="list-group-item list-group-item-action {{f_current}}" >Currently Playing</button></form>
+                    <form method="get" action="/library/beaten"><button type="submit" class="list-group-item list-group-item-action {{f_beaten}}">Beaten</button></form>
+                    <form method="get" action="/library/platform"><button type="submit" class="list-group-item list-group-item-action {{f_plat}}">Platform</button></form>
+                    
 
                 </ul>
             </div>
@@ -181,9 +180,7 @@
                 </table>
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script src="./js/library.js"></script>

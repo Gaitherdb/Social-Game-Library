@@ -13,7 +13,52 @@ router.get('/', async (req, res) => {
     }
 })
 
+//Renders library parameter with the logged in user's catalog of game entries- sorted by descending game id order
 router.get('/library/', withAuth, async (req, res) => {
+    try {
+        const userData = await User.findAll({
+            where: {
+                id: req.session.user_id
+            },
+            include:
+                [
+                    // Include their list of games
+                    {
+                        model: Game,
+                        through: { Ownership, attributes: [] },
+                        as: "owned_games",
+                    },
+                    // Include their list of friends
+                    {
+                        model: User,
+                        through: { Friendship, attributes: [] },
+                        as: "friends",
+                        //Include the games owned by the friend
+                        include: [
+                            {
+                                model: Game,
+                                through: { Ownership, attributes: [] },
+                                as: "owned_games",
+                            }
+                        ],
+                    }
+                ],
+                order: [['owned_games','id', 'desc']]
+
+        });
+        const users = userData.map((user) => user.get({ plain: true }));
+        res.render('library', {
+            users,
+            logged_in: req.session.logged_in,
+            f_none: "text-light bg-primary"
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//filter the games library by currently_playing
+router.get('/library/currently_playing', withAuth, async (req, res) => {
     try {
         const userData = await User.findAll({
             where: {
@@ -42,11 +87,99 @@ router.get('/library/', withAuth, async (req, res) => {
                         ]
                     }
                 ],
+                order: [['owned_games','currently_playing', 'desc']]
         });
         const users = userData.map((user) => user.get({ plain: true }));
         res.render('library', {
             users,
-            logged_in: req.session.logged_in
+            logged_in: req.session.logged_in,
+            f_current: "text-light bg-primary"
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//filter the games library by beaten
+router.get('/library/beaten', withAuth, async (req, res) => {
+    try {
+        const userData = await User.findAll({
+            where: {
+                id: req.session.user_id
+            },
+            include:
+                [
+                    // Include their list of games
+                    {
+                        model: Game,
+                        through: { Ownership, attributes: [] },
+                        as: "owned_games",
+                    },
+                    // Include their list of friends
+                    {
+                        model: User,
+                        through: { Friendship, attributes: [] },
+                        as: "friends",
+                        //Include the games owned by the friend
+                        include: [
+                            {
+                                model: Game,
+                                through: { Ownership, attributes: [] },
+                                as: "owned_games",
+                            }
+                        ]
+                    }
+                ],
+                order: [['owned_games','beaten', 'desc']]
+        });
+        const users = userData.map((user) => user.get({ plain: true }));
+        res.render('library', {
+            users,
+            logged_in: req.session.logged_in,
+            f_beaten: "text-light bg-primary"
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//filter the games library by Platform
+router.get('/library/platform', withAuth, async (req, res) => {
+    try {
+        const userData = await User.findAll({
+            where: {
+                id: req.session.user_id
+            },
+            include:
+                [
+                    // Include their list of games
+                    {
+                        model: Game,
+                        through: { Ownership, attributes: [] },
+                        as: "owned_games",
+                    },
+                    // Include their list of friends
+                    {
+                        model: User,
+                        through: { Friendship, attributes: [] },
+                        as: "friends",
+                        //Include the games owned by the friend
+                        include: [
+                            {
+                                model: Game,
+                                through: { Ownership, attributes: [] },
+                                as: "owned_games",
+                            }
+                        ]
+                    }
+                ],
+                order: [['owned_games','platform', 'asc']]
+        });
+        const users = userData.map((user) => user.get({ plain: true }));
+        res.render('library', {
+            users,
+            logged_in: req.session.logged_in,
+            f_plat: "text-light bg-primary"
         });
     } catch (err) {
         res.status(500).json(err);
