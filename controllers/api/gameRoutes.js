@@ -3,7 +3,7 @@ const { Game, User, Ownership } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Insomnia Testing: Get all games of the logged in user
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const userID = req.session.user_id;
         const userData = await User.findAll({
@@ -81,11 +81,37 @@ router.delete('/:id', withAuth, async (req, res) => {
           user_id: req.session.user_id,
         },
       });
-      
+
       res.status(200).json(ownerData);
     } catch (err) {
       res.status(500).json(err);
     }
   });
+
+  //clicking save in the edit game form will update an entry
+  router.put('/:id', withAuth, async (req, res) => {
+    try {
+      const gameData = await Game.update(
+        {
+          ...req.body
+
+        },
+        {
+        where: {
+          id: req.params.id
+        },
+      });
+    
+      if (!gameData) {
+        res.status(404).json({ message: 'No game found with this id!' });
+        return;
+      }
+  
+      res.status(200).json(gameData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
 
 module.exports = router;
