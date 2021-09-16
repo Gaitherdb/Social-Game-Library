@@ -16,7 +16,6 @@
             </div>
         </div>
     </div>
-
     <!-- This is a row that only contains the "Add Game" button -->
     <div class="row row-cols-1 justify-content-center my-3">
         <div class="d-grid gap-2 col-3">
@@ -41,6 +40,11 @@
                 <option value="Wii">Wii</option>
             </select>
             <br>
+            <div class="starRatingContainer">
+                <div class="stars"></div>
+            </div>
+            <div class="ratingHolder d-none"></div>
+            <br>
             <div class="container">
                 <div class="row">
                     <div class="form-check col-lg-2">
@@ -56,7 +60,7 @@
                         </label>
                     </div>
                     <div>
-                        <div class="row  ">
+                        <div class="row">
                             <div class="position-relative">
                                 <button type="submit" id="submitGame"
                                     class="btn btn-primary btn-lg position-absolute bottom-0 start-50 translate-middle-x">Submit</button>
@@ -97,12 +101,17 @@
             <div class="container p-1">
                 Filter By:
                 <ul class="m-2 list-group">
-                   
-                    <form method="get" action="/library/"><button type="submit" class="list-group-item list-group-item-action {{f_none}}">None</button></form>
-                    <form method="get" action="/library/currently_playing"><button type="submit" class="list-group-item list-group-item-action {{f_current}}" >Currently Playing</button></form>
-                    <form method="get" action="/library/beaten"><button type="submit" class="list-group-item list-group-item-action {{f_beaten}}">Beaten</button></form>
-                    <form method="get" action="/library/platform"><button type="submit" class="list-group-item list-group-item-action {{f_plat}}">Platform</button></form>
-                    
+
+                    <form method="get" action="/library/"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_none}}">None</button></form>
+                    <form method="get" action="/library/currently_playing"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_current}}">Currently Playing</button>
+                    </form>
+                    <form method="get" action="/library/beaten"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_beaten}}">Beaten</button></form>
+                    <form method="get" action="/library/platform"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_plat}}">Platform</button></form>
+
 
                 </ul>
             </div>
@@ -143,7 +152,7 @@
                         <tr class="editGameForm d-none" id="{{game.id}}">
                             <th><input type="text" id="editName" value="{{game.name}}" /></th>
                             <td><select class="form-select" id="editPlatform" aria-label="Platform">
-                                    <option value="{{game.platform}}" selected >{{game.platform}}</option>
+                                    <option value="{{game.platform}}" selected>{{game.platform}}</option>
                                     <option value="PC">PC</option>
                                     <option value="PS5">PS5</option>
                                     <option value="PS4">PS4</option>
@@ -157,15 +166,17 @@
                                     <option value="Wii">Wii</option>
                                 </select></td>
                             <td><select class="form-select" id="editBeaten" aria-label="Is Betean?">
-                                <option value="{{game.beaten}}" selected>{{#if game.beaten}}Yes{{else}}No{{/if}}</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select></td>
+                                    <option value="{{game.beaten}}" selected>{{#if game.beaten}}Yes{{else}}No{{/if}}
+                                    </option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select></td>
                             <td><select class="form-select" id="editCurrentlyPlaying" aria-label="Currently Playing?">
-                                <option value="{{game.currently_playing}}" selected>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select></td>
+                                    <option value="{{game.currently_playing}}" selected>{{#if
+                                        game.currently_playing}}Yes{{else}}No{{/if}}</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select></td>
                             <td>{{format_time game.date_added}}</td>
                             <td><button class="cnlEditBtn" data-id="{{game.id}}">Cancel</button></td>
                             <td><button class="deleteGameBtn" data-id="{{game.id}}">Delete</button></td>
@@ -183,4 +194,6 @@
     </div>
 </div>
 
+
 <script src="./js/library.js"></script>
+<script src="./js/starRating.js"></script>

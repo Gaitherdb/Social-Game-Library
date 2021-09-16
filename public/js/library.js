@@ -5,8 +5,8 @@ window.addEventListener('DOMContentLoaded', function () {
     const gameList = document.querySelector('#ownedGames');
     const editGameForm = document.querySelectorAll('.editGameForm');
     const userGames = document.querySelectorAll('.userGames');
-
-
+    
+    
     // Clicking an entry will access the edit form for games in the library
     gameList.addEventListener("click", function (event) {
 
@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     let platform = gamePlatform[i].value;
                     let beaten = gameBeaten[i].value;
                     let currently_playing = gameCurrentlyPlaying[i].value;
-                    
+
                     const editGameData = await fetch(`/api/games/${game_id}`, {
                         method: 'PUT',
                         body: JSON.stringify({ name, platform, beaten, currently_playing }),
@@ -162,6 +162,14 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
+    // let stars = document.querySelector('.stars').value;
+    
+    var settings=[
+        {"rating":"3", "maxRating":"5", "minRating":"0", "readOnly":"no", "starImage":"../images/star.png", "emptyStarImage":"../images/starbackground.png", "starSize":"16", "step":"1"} 
+    ]
+    var className="stars";
+    rateSystem(className, settings, function(rating, ratingTargetElement){ id = ratingTargetElement.parentElement.parentElement.getElementsByClassName("ratingHolder")[0].innerHTML = rating; });
+    // console.log(stars)
 
     document
         .querySelector('#addGameForm')
