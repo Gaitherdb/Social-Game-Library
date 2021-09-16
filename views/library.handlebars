@@ -97,13 +97,12 @@
             <div class="container p-1">
                 Filter By:
                 <ul class="m-2 list-group">
-                    <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                        None
-                    </button>
-
-                    <button type="button" class="list-group-item list-group-item-action">Currently Playing</button>
-                    <button type="button" class="list-group-item list-group-item-action">Beaten</button>
-                    <button type="button" class="list-group-item list-group-item-action">Platform</button>
+                   
+                    <form method="get" action="/library/"><button type="submit" class="list-group-item list-group-item-action {{f_none}}">None</button></form>
+                    <form method="get" action="/library/currently_playing"><button type="submit" class="list-group-item list-group-item-action {{f_current}}" >Currently Playing</button></form>
+                    <form method="get" action="/library/beaten"><button type="submit" class="list-group-item list-group-item-action {{f_beaten}}">Beaten</button></form>
+                    <form method="get" action="/library/platform"><button type="submit" class="list-group-item list-group-item-action {{f_plat}}">Platform</button></form>
+                    
 
                 </ul>
             </div>
@@ -119,9 +118,9 @@
                         <tr>
                             <th scope="col">Game Title</th>
                             <th scope="col">Platform</th>
-                            <th scope="col">Date Added</th>
                             <th scope="col">Beaten?</th>
                             <th scope="col">Currently Playing?</th>
+                            <th scope="col">Date Added</th>
                             <th scope="col" class="d-none" id="cancelCol"></th>
                             <th scope="col" class="d-none" id="deleteCol"></th>
                             <th scope="col" class="d-none" id="saveCol"></th>
@@ -136,9 +135,9 @@
                         <tr class="userGames" id="{{game.id}}">
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
+                            <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
+                            <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
                             <td>{{format_time game.date_added}}</td>
-                            <td>{{game.beaten}}</td>
-                            <td>{{game.currently_playing}}</td>
                         </tr>
                         {{!-- edit game form --}}
                         <tr class="editGameForm d-none" id="{{game.id}}">
@@ -157,17 +156,17 @@
                                     <option value="Wii U">Wii U</option>
                                     <option value="Wii">Wii</option>
                                 </select></td>
-                            <td>{{format_time game.date_added}}</td>
                             <td><select class="form-select" id="editBeaten" aria-label="Is Betean?">
-                                <option value="{{game.beaten}}" selected>{{game.beaten}}</option>
-                                <option value="true">True</option>
-                                <option value="false">False</option>
+                                <option value="{{game.beaten}}" selected>{{#if game.beaten}}Yes{{else}}No{{/if}}</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
                             </select></td>
                             <td><select class="form-select" id="editCurrentlyPlaying" aria-label="Currently Playing?">
-                                <option value="{{game.currently_playing}}" selected>{{game.currently_playing}}</option>
-                                <option value="true">True</option>
-                                <option value="false">False</option>
+                                <option value="{{game.currently_playing}}" selected>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
                             </select></td>
+                            <td>{{format_time game.date_added}}</td>
                             <td><button class="cnlEditBtn" data-id="{{game.id}}">Cancel</button></td>
                             <td><button class="deleteGameBtn" data-id="{{game.id}}">Delete</button></td>
                             <td><button class="saveGameBtn" data-id="{{game.id}}">Save</button></td>
@@ -181,9 +180,7 @@
                 </table>
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script src="./js/library.js"></script>

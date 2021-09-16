@@ -154,7 +154,8 @@ window.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert(postGameData.statusText);
             }
-        } else {
+        } //if the user did not input a game title or platform, a modal pops up
+        else {
             errorModal.style.display = "block";
             const modalClose = document.querySelector('.btn-close');
             modalClose.onclick = function () {
