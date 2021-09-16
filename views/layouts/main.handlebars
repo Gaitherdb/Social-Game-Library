@@ -96,8 +96,8 @@
                         <div id="emailHelp" class="form-text">Enter the email of the user you want to send the request
                             to</div>
                     </div>
-                    <button type="submit" class="btn btn-success" id="submitReqBtn"
-                        onclick="submitRequest()">Submit Friend Request</button>
+                    <button type="submit" class="btn btn-success" id="submitReqBtn" onclick="submitRequest()">Submit
+                        Friend Request</button>
                     <hr>
                 </form>
 
@@ -151,8 +151,11 @@
                     {{#each users as |user|}}
                     {{#if user.friends.length}}
                     {{#each user.friends as |friend|}}
-                    <li class="list-group-item list-group-item-action list-group-item-info text-center" onclick="showProfile({{friend.id}})">
+                    <li class="list-group-item list-group-item-action list-group-item-info text-center friend-item"
+                        onclick="showProfile({{friend.id}})">
                         {{friend.name}}</li>
+                    <button type="button" class="btn btn-danger btn-sm test-center" data-friend="{{friend.name}}" data-id="{{friend.id}}"
+                        onclick="removeFriend(this)">Remove</button>
                     {{/each}}
 
                     <!-- Otherwise, show a sad message -->

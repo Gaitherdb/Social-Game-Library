@@ -50,15 +50,15 @@ router.get('/', async (req, res) => {
             const requests = requestData.map((request) => request.get({ plain: true }));
 
             let user_ids = [];
-    
+
             requests.map((request) => user_ids.push(request.origin_user_id))
-    
+
             const senderData = await User.findAll({
                 where: {
                     id: user_ids
                 }
             })
-    
+
             const senders = senderData.map((user) => user.get({ plain: true }));
 
             res.render('homepage', {
@@ -106,12 +106,35 @@ router.get('/library/', withAuth, async (req, res) => {
                         ],
                     }
                 ],
-                order: [['owned_games','id', 'desc']]
+            order: [['owned_games', 'id', 'desc']]
 
         });
         const users = userData.map((user) => user.get({ plain: true }));
+
+        // Check how many requests they have waiting for them
+        const requestData = await Request.findAll({
+            where: {
+                destination_user_id: req.session.user_id,
+            },
+        })
+
+        const requests = requestData.map((request) => request.get({ plain: true }));
+
+        let user_ids = [];
+
+        requests.map((request) => user_ids.push(request.origin_user_id))
+
+        const senderData = await User.findAll({
+            where: {
+                id: user_ids
+            }
+        })
+
+        const senders = senderData.map((user) => user.get({ plain: true }));
+
         res.render('library', {
             users,
+            senders,
             logged_in: req.session.logged_in,
             f_none: "text-light bg-primary"
         });
@@ -150,7 +173,7 @@ router.get('/library/currently_playing', withAuth, async (req, res) => {
                         ]
                     }
                 ],
-                order: [['owned_games','currently_playing', 'desc']]
+            order: [['owned_games', 'currently_playing', 'desc']]
         });
         const users = userData.map((user) => user.get({ plain: true }));
         res.render('library', {
@@ -193,7 +216,7 @@ router.get('/library/beaten', withAuth, async (req, res) => {
                         ]
                     }
                 ],
-                order: [['owned_games','beaten', 'desc']]
+            order: [['owned_games', 'beaten', 'desc']]
         });
         const users = userData.map((user) => user.get({ plain: true }));
         res.render('library', {
@@ -236,7 +259,7 @@ router.get('/library/platform', withAuth, async (req, res) => {
                         ]
                     }
                 ],
-                order: [['owned_games','platform', 'asc']]
+            order: [['owned_games', 'platform', 'asc']]
         });
         const users = userData.map((user) => user.get({ plain: true }));
         res.render('library', {

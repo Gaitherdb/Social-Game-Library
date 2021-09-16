@@ -40,7 +40,6 @@ async function showProfile(friendID) {
 
 // Create the Friendship based on the id of the Request
 async function approveReq(button) {
-
   const senderID = button.dataset.senderid;
 
   const response = await fetch(`/api/users/request/${senderID}`, {
@@ -48,7 +47,9 @@ async function approveReq(button) {
     headers: { 'Content-Type': 'application/json' },
   });
 
-  if (!(response.ok)) {
+  if (response.ok) {
+    window.location.reload();
+  } else {
     alert(response.statusText);
   }
 }
@@ -63,7 +64,9 @@ async function declineReq(button) {
     headers: { 'Content-Type': 'application/json' },
   });
 
-  if (!(response.ok)) {
+  if (response.ok) {
+    window.location.reload();
+  } else {
     alert(response.statusText);
   }
 }
@@ -100,3 +103,21 @@ function showRequestList(button) {
   }
 }
 
+// Remove friend from friendslist
+async function removeFriend(button) {
+  let name = button.dataset.friend;
+  let id = button.dataset.id;
+  var r = confirm(`Are you sure you want to remove ${name} from your friendslist?`);
+  if (r) {
+    const response = await fetch(`/api/friends/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      alert(response.statusText);
+    }
+  }
+}
