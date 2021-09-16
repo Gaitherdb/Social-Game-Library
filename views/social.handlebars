@@ -14,30 +14,53 @@
         </div>
     </div>
 
-    <!-- This is the main row which just contains the table of all friend requests -->
-    <div class="row row-cols-2 justify-content-center my-3">
+    <div class="row row-cols-1 justify-content-center my-3">
+        <div class="col-md-auto text-center">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" onclick="showFeed()" id="feedTab">Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="showRequests()" id="requestTab">
+                        Requests       <span class="badge bg-info text-dark">{{senders.length}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-        <!-- Friend's Library Table -->
+    <!-- This is the main row which shows either the friend requests list or the friend feed -->
+    <div class="row row-cols-2 justify-content-center my-3">
         <div class="col-12 text-center">
             <div class="container p-1">
-                <ul class="list-group">
-                    
+
+                <!-- Friend Requests list -->
+                <ul class="d-none list-group" id="requestList">
+
                     <!-- Display every friend request in a list -->
                     {{#each senders as |sender|}}
                     <li class="list-group-item">{{sender.name}} wants to be your friend
 
                         <!-- Approval button -->
-                        <button type="button" class="btn btn-outline-primary" data-senderID="{{sender.id}}" onclick="approveReq(this)">Approve</button>
+                        <button type="button" class="btn btn-outline-primary" data-senderID="{{sender.id}}"
+                            onclick="approveReq(this)">Approve</button>
 
                         <!-- Decline button -->
-                        <button type="button" class="btn btn-outline-primary" data-senderID="{{sender.id}}" onclick="declineReq(this)">Decline</button>
+                        <button type="button" class="btn btn-outline-primary" data-senderID="{{sender.id}}"
+                            onclick="declineReq(this)">Decline</button>
                     </li>
                     {{/each}}
 
+                </ul>
+
+
+                <!-- Feed list -->
+                <ul class="list-group" id="feedList">
+                    <li class="list-group-item">This is a test for the feed</li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
-<script src="./js/friendReq.js"></script>
+<script src="./js/social.js"></script>

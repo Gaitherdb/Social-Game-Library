@@ -1,92 +1,57 @@
 const mainDiv = document.getElementById("friendlist");
 
-const printFriends = () => {
-fetch('/api/friends')
-  .then(
-    function(response) {
-      if (response.status !== 200) {
-        console.log('Looks like there was a problem. Status Code: ' +
-          response.status);
-        return;
-      }
-
-      // Examine the text in the response
-      response.json().then(function(data) {
-        data[0].friends.forEach(element => {
-            const listItem = document.createElement("li")
-            const friendEl = document.createElement("a")
-            listItem.appendChild(friendEl)
-            friendEl.textContent = element.name
-            console.log(element.name)
-            friendEl.setAttribute("href", '/profile/' + element.id)
-            mainDiv.appendChild(listItem)
-        });
-      });
-    }
-  )
-  .catch(function(err) {
-    console.log('Fetch Error :-S', err);
-  });
+// Show the Friend Request form
+function showRequestForm(button) {
+  let requestForm = document.getElementById("addFriendForm");
+  requestForm.classList.remove("d-none");
+  button.classList.add("d-none")
 }
-printFriends();
 
-const getuserId = async (event) => {
+// Hide the Friend Request form
+function cancelRequest(button) {
   event.preventDefault();
-  // console.log('friend req btn test')
-  const inputEmail = document.querySelector('#exampleInputEmail1').value.trim();
 
-  fetch('/api/users/test/')
-  .then(
-    function(response) {
-      if (response.status !== 200) {
-        console.log('Looks like there was a problem. Status Code: ' +
-          response.status);
-        return;
-      }
+  let requestForm = document.getElementById("addFriendForm");
+  let addFriendBtn = document.getElementById("addFriendBtn")
 
-      // Examine the text in the response
-      response.json().then(function(data) {
-        // console.log(data)
-        data.forEach(el => {
-
-          // console.log(el.email)
-          // console.log(inputEmail)
-
-          if (el.email===inputEmail){
-            newFormHandler(el.id)
-          }
-        })
-      });
-    }
-  )
+  requestForm.classList.add("d-none");
+  addFriendBtn.classList.remove("d-none");
 }
 
-const newFormHandler = async (id) => {
-  
-  // const destination_user_id = document.querySelector('#exampleInputEmail1').value.trim();
-  // console.log(id)
+// Create a new request object
+async function submitRequest() {
+  event.preventDefault();
 
-  const destination_user_id = id
+  let requestForm = document.getElementById("addFriendForm");
+  let addFriendBtn = document.getElementById("addFriendBtn")
+  let email = document.getElementById("requestEmail").value;
 
-  if (destination_user_id) {
-    const response = await fetch(`/api/friends/request/`, {
-      method: 'POST',
-      body: JSON.stringify({destination_user_id}),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    // console.log(JSON.stringify({destination_user_id}))
+  const response = await fetch(`/api/users/request/`, {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-    if (response.ok) {
-      console.log(response)
-    } else {
-      alert('Failed to create friend request');
-    }
+  if (response.ok) {
+    alert("Friend Request sent successfully!")
+  } else {
+    alert(response.statusText);
   }
-};
 
+  requestForm.classList.add("d-none");
+  addFriendBtn.classList.remove("d-none");
+}
 
-document
-    .querySelector('.new-request-form')
-    .addEventListener('submit', getuserId);
+// Show the profile of the selected friend
+async function showProfile(friendID) {
+  const response = await fetch(`/profile/${friendID}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (response.ok) {
+    document.location.replace(`/profile/${friendID}`);
+  } else {
+    alert(response.statusText);
+  }
+}

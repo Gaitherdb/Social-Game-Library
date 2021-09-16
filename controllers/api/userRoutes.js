@@ -87,13 +87,42 @@ router.get('/request/:id', async (req, res) => {
     }
 })
 
+// Create a friend request
+router.post('/request/', async (req, res) => {
+    try {
+        // Find the user that the request should be sent to
+        const userData = await User.findOne({
+            where: {
+                email: req.body.email,
+            }
+        })
+
+        // Create the Request
+        const requestData = await Request.create({
+            origin_user_id: req.session.user_id,
+            destination_user_id: userData.id
+        });
+
+        res.status(200).json(requestData)
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 // Approve a friend request
 router.post('/request/:id', async (req, res) => {
     try {
         // Create the friendship
         const friendshipData = await Friendship.create({
             user_id: req.params.id,
-            friend_id: req.session.user_id 
+            friend_id: req.session.user_id,
+        });
+
+        // Create the reversed friendship
+        const friendshipData2 = await Friendship.create({
+            user_id: req.session.user_id,
+            friend_id: req.params.id,
         });
 
         // Delete the request once added
@@ -105,7 +134,7 @@ router.post('/request/:id', async (req, res) => {
         });
 
         res.status(200).json(friendshipData)
-        
+
     } catch (err) {
         res.status(500).json(err);
     }
@@ -122,7 +151,7 @@ router.delete('/request/:id', async (req, res) => {
         });
 
         res.status(200).json(requestData)
-        
+
     } catch (err) {
         res.status(500).json(err);
     }

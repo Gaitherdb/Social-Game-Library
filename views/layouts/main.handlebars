@@ -40,11 +40,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/library">Library</a>
                     </li>
-
-                    <!-- Social: See your friends game collection -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/social">Social</a>
-                    </li>
                 </ul>
 
                 <!-- Separated into different ul so that we can align it to the end of navbar -->
@@ -56,12 +51,15 @@
                     <!-- Friends List: Check your friends list -->
                     <!-- The friends list appears in a offcanvas -->
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                            aria-controls="offcanvasExample">Friends List</a>
-                        {{!-- <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample"
-                            role="button" aria-controls="offcanvasExample">
-                            Link with href
-                        </a> --}}
+                        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#friendsList" role="button"
+                            aria-controls="friendsList">
+                            Friends List
+                        </a>
+                    </li>
+
+                    <!-- Requests: See your friends game collection -->
+                    <li class="nav-item">
+                        <a class="btn">Requests <span class="badge bg-info text-dark">{{requests.length}}</span></a>
                     </li>
 
                     <!-- Logout: Log out of the session -->
@@ -85,37 +83,55 @@
     <!-- Content of each individual page -->
     {{{ body }}}
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+
+    <!-- Friend's List -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="friendsList" aria-labelledby="friendsLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Friend's List</h5>
+            <h5 class="offcanvas-title" id="friendsLabel">Friends List</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+
         <div class="offcanvas-body">
             <div>
-                <form class="new-request-form">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Friend Request To:</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter their user email">
-                        <small id="emailHelp" class="form-text text-muted">Click below to submit friend request.</small>
+                <!-- Submit Friend request form; Hidden by default -->
+                <form class="d-none" id="addFriendForm">
+                    <div class="mb-3">
+                        <label for="requestEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="requestEmail" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">Enter the email of the user you want to send the request
+                            to</div>
                     </div>
-                
-                    <button type="submit" class="btn btn-primary">Submit Friend Request</button>
+                    <button type="submit" class="btn btn-outline-primary" id="submitReqBtn"
+                        onclick="submitRequest()">Submit Friend Request</button>
+                    <button type="submit" class="btn btn-outline-primary" id="cancelReqBtn"
+                        onclick="cancelRequest(this)">Cancel</button>
+                    <hr>
                 </form>
 
-                <h4 class="mb-3">Your Friends:</h4>
+                <!-- Button to show friend request form -->
+                <button type="button" id="addFriendBtn" class="btn btn-outline-primary"
+                    onclick="showRequestForm(this)">Add New
+                    Friend</button>
 
-                <ul id = 'friendlist'>
-        
+
+                <!-- List of friends -->
+                <h4 class="m-3">Your Friends:</h4>
+
+                <ul id='friendlist' class="list-group">
+                    <!-- If logged in user has friends, show them -->
+                    {{#each users as |user|}}
+                    {{#if user.friends.length}}
+                    {{#each user.friends as |friend|}}
+                    <li class="list-group-item list-group-item-action text-center" onclick="showProfile({{friend.id}})">
+                        {{friend.name}}</li>
+                    {{/each}}
+
+                    <!-- Otherwise, show a sad message -->
+                    {{else}}
+                    <li class="list-group-item">It's looking pretty empty. Add a friend!</li>
+                    {{/if}}
+                    {{/each}}
                 </ul>
-                
-                {{!-- {{#each data as |user|}}
-                {{#if user.friends.length}}
-                {{#each friends as |friend|}}
-                <h4>{{friend.name}}</h4>
-                {{/each}}
-                {{/if}}
-                {{/each}} --}}
             </div>
         </div>
     </div>

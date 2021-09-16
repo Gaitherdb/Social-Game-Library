@@ -35,6 +35,7 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     })
+    
     //clicking the cancel button on the edit form, hides the form 
     gameList.addEventListener("click", function (event) {
         var cancelEditBtn = document.querySelectorAll('.cnlEditBtn');

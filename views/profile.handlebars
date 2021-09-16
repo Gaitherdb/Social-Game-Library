@@ -16,40 +16,35 @@
     <div class="row row-cols-1 justify-content-center my-3">
 
         <!-- Friend's Library Table -->
-        <div class="col-10 col-sm-3 text-center">
-            <div class="container p-1">
-                <table class="table">
+        <div class="col-lg-8 col-sm-12 col-xs-12 text-center">
+            <div class="table-responsive-sm p-1" style="overflow: auto">
+                <table class="table table-hover">
 
                     <!-- Heading row -->
                     <thead>
                         <tr>
                             <th scope="col">Game Title</th>
                             <th scope="col">Platform</th>
+                            <th scope="col">Date Added</th>
                             <th scope="col">Beaten?</th>
                             <th scope="col">Currently Playing?</th>
-                            <th scope="col">Date Added</th>
                         </tr>
                     </thead>
 
-                    <!-- Selected friend's actual games -->
-                    <tbody>
-                        {{#if owned_games.length}}
+                    <!-- The actual games -->
+                    <tbody id="ownedGames">
                         {{#each owned_games as |game|}}
-                        <tr>
+                        <tr class="userGames" id={{game.id}}>
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
+                            <td>{{format_time game.date_added}}</td>
                             <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
                             <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
-                            <td>{{format_time game.date_added}}</td>
                         </tr>
                         {{/each}}
-                        {{/if}}
                     </tbody>
-
                 </table>
             </div>
         </div>
-
     </div>
-
 </div>
