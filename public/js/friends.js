@@ -1,23 +1,5 @@
 const mainDiv = document.getElementById("friendlist");
 
-// Show the Friend Request form
-function showRequestForm(button) {
-  let requestForm = document.getElementById("addFriendForm");
-  requestForm.classList.remove("d-none");
-  button.classList.add("d-none")
-}
-
-// Hide the Friend Request form
-function cancelRequest(button) {
-  event.preventDefault();
-
-  let requestForm = document.getElementById("addFriendForm");
-  let addFriendBtn = document.getElementById("addFriendBtn")
-
-  requestForm.classList.add("d-none");
-  addFriendBtn.classList.remove("d-none");
-}
-
 // Create a new request object
 async function submitRequest() {
   event.preventDefault();
@@ -55,3 +37,66 @@ async function showProfile(friendID) {
     alert(response.statusText);
   }
 }
+
+// Create the Friendship based on the id of the Request
+async function approveReq(button) {
+
+  const senderID = button.dataset.senderid;
+
+  const response = await fetch(`/api/users/request/${senderID}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!(response.ok)) {
+    alert(response.statusText);
+  }
+}
+
+// Delete the Request by their id
+async function declineReq(button) {
+
+  const senderID = button.dataset.senderid;
+
+  const response = await fetch(`/api/users/request/${senderID}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!(response.ok)) {
+    alert(response.statusText);
+  }
+}
+
+// Show the request form
+function showRequestForm(button) {
+  event.preventDefault();
+
+  let requestForm = document.getElementById("addFriendForm");
+
+  if (requestForm.classList.contains("d-none")) {
+    requestForm.classList.remove("d-none");
+    button.classList.add("active");
+  }
+  else {
+    button.classList.remove("active");
+    requestForm.classList.add("d-none");
+  }
+}
+
+// Show the list of incoming friend request
+function showRequestList(button) {
+  event.preventDefault();
+
+  let requestList = document.getElementById("requestList");
+
+  if (requestList.classList.contains("d-none")) {
+    requestList.classList.remove("d-none");
+    button.classList.add("active");
+  }
+  else {
+    requestList.classList.add("d-none");
+    button.classList.remove("active");
+  }
+}
+
