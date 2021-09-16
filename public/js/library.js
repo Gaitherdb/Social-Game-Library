@@ -101,6 +101,7 @@ window.addEventListener('DOMContentLoaded', function () {
         var game_id = element.parentElement.parentElement.id;
         var gameName = document.querySelectorAll('#editName');
         var gamePlatform = document.querySelectorAll('#editPlatform');
+        var gameRating = document.querySelectorAll('#editRating');
         var gameBeaten = document.querySelectorAll('#editBeaten');
         var gameCurrentlyPlaying = document.querySelectorAll('#editCurrentlyPlaying');
         var saveGameBtn = document.querySelectorAll('.saveGameBtn')
@@ -111,12 +112,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 if (saveGameBtn[i].dataset.id == `${game_id}`) {
                     let name = gameName[i].value;
                     let platform = gamePlatform[i].value;
+                    let rating = gameRating[i].value;
                     let beaten = gameBeaten[i].value;
                     let currently_playing = gameCurrentlyPlaying[i].value;
 
                     const editGameData = await fetch(`/api/games/${game_id}`, {
                         method: 'PUT',
-                        body: JSON.stringify({ name, platform, beaten, currently_playing }),
+                        body: JSON.stringify({ name, platform, beaten, currently_playing, rating}),
                         headers: { 'Content-Type': 'application/json' },
                     });
                     if (editGameData.ok) {
@@ -135,16 +137,17 @@ window.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         const name = document.querySelector('#gameName').value;
         const platform = document.querySelector('#platform').value;
+        const rating = document.querySelector('.stars').dataset.rating.split('').slice(0,1)[0];
         var beaten = document.querySelector('#beaten').checked;
         var currently_playing = document.querySelector('#currently_playing').checked;
         const errorModal = document.querySelector('#staticBackdrop');
-
+        
 
         if (name && platform != "Platform") {
             // Send a POST request to the API endpoint
             const postGameData = await fetch('/api/games', {
                 method: 'POST',
-                body: JSON.stringify({ name, platform, beaten, currently_playing }),
+                body: JSON.stringify({ name, platform, beaten, currently_playing, rating }),
                 headers: { 'Content-Type': 'application/json' },
             });
 
@@ -163,14 +166,13 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
-    // let stars = document.querySelector('.stars').value;
     
     var settings=[
-        {"rating":"3", "maxRating":"5", "minRating":"0", "readOnly":"no", "starImage":"../images/star.png", "emptyStarImage":"../images/starbackground.png", "starSize":"16", "step":"1"} 
+        {"rating":"3", "maxRating":"5", "minRating":"0", "readOnly":"no", "starImage":"../images/star.png", "emptyStarImage":"../images/starbackground.png", "starSize":"18", "step":"1"} 
     ]
     var className="stars";
-    rateSystem(className, settings, function(rating, ratingTargetElement){ id = ratingTargetElement.parentElement.parentElement.getElementsByClassName("ratingHolder")[0].innerHTML = rating; });
-    // console.log(stars)
+    rateSystem(className, settings);
+    
 
     document
         .querySelector('#addGameForm')
