@@ -11,6 +11,12 @@ router.delete('/:id', async (req, res) => {
                 friend_id: req.params.id,
             },
         });
+        const friendData2 = await Friendship.destroy({
+            where: {
+                user_id: req.params.id,
+                friend_id: req.session.user_id
+            },
+        });
 
         res.status(200).json(friendData);
 
