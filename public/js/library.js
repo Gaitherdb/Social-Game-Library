@@ -5,8 +5,8 @@ window.addEventListener('DOMContentLoaded', function () {
     const gameList = document.querySelector('#ownedGames');
     const editGameForm = document.querySelectorAll('.editGameForm');
     const userGames = document.querySelectorAll('.userGames');
-    
-    
+
+
     // Clicking an entry will access the edit form for games in the library
     gameList.addEventListener("click", function (event) {
 
@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     })
-    
+
     //clicking the cancel button on the edit form, hides the form 
     gameList.addEventListener("click", function (event) {
         var cancelEditBtn = document.querySelectorAll('.cnlEditBtn');
@@ -76,23 +76,29 @@ window.addEventListener('DOMContentLoaded', function () {
     //clicking delete btn on the edit form, deletes the entry
     const deleteGameEntry = async (event) => {
         var deleteGameBtn = document.querySelectorAll('.deleteGameBtn');
-        var element = event.target;
-        let game_id = element.parentElement.parentElement.id;
-        if (element.matches(".deleteGameBtn")) {
-            for (i = 0; i < deleteGameBtn.length; i++) {
-                if (deleteGameBtn[i].dataset.id == `${game_id}`) {
-                    const deleteGameData = await fetch(`/api/games/${game_id}`, {
-                        method: 'DELETE',
-                    });
+        const confirmDelete = document.querySelector("#confirmDelete");
 
-                    if (deleteGameData.ok) {
-                        // If successful, refresh the page
-                        document.location.reload();
-                    } else {
-                        alert(deleteGameData.statusText);
+        var element = event.target;
+        //triggers modal
+        if (element.matches(".deleteGameBtn")) {
+            var deleteBtn = element;
+            var game_id = deleteBtn.parentElement.parentElement.id;
+            confirmDelete.addEventListener("click", async function  () {
+                for (i = 0; i < deleteGameBtn.length; i++) {
+                    if (deleteGameBtn[i].dataset.id == `${game_id}`) {
+                        const deleteGameData = await fetch(`/api/games/${game_id}`, {
+                            method: 'DELETE',
+                        });
+    
+                        if (deleteGameData.ok) {
+                            // If successful, refresh the page
+                            document.location.reload();
+                        } else {
+                            alert(deleteGameData.statusText);
+                        }
                     }
                 }
-            }
+            })
         }
     }
     //clicking the save btn in the game edit form will update any changes made to the entry
@@ -118,7 +124,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
                     const editGameData = await fetch(`/api/games/${game_id}`, {
                         method: 'PUT',
-                        body: JSON.stringify({ name, platform, beaten, currently_playing, rating}),
+                        body: JSON.stringify({ name, platform, beaten, currently_playing, rating }),
                         headers: { 'Content-Type': 'application/json' },
                     });
                     if (editGameData.ok) {
@@ -137,11 +143,10 @@ window.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         const name = document.querySelector('#gameName').value;
         const platform = document.querySelector('#platform').value;
-        const rating = document.querySelector('.stars').dataset.rating.split('').slice(0,1)[0];
+        const rating = document.querySelector('.stars').dataset.rating.split('').slice(0, 1)[0];
         var beaten = document.querySelector('#beaten').checked;
         var currently_playing = document.querySelector('#currently_playing').checked;
         const errorModal = document.querySelector('#staticBackdrop');
-        
 
         if (name && platform != "Platform") {
             // Send a POST request to the API endpoint
@@ -160,19 +165,19 @@ window.addEventListener('DOMContentLoaded', function () {
         } //if the user did not input a game title or platform, a modal pops up
         else {
             errorModal.style.display = "block";
-            const modalClose = document.querySelector('.btn-close');
+            const modalClose = document.querySelector('#entryErrorClose');
             modalClose.onclick = function () {
                 errorModal.style.display = "none";
             }
         }
     }
-    
-    var settings=[
-        {"rating":"3", "maxRating":"5", "minRating":"0", "readOnly":"no", "starImage":"../images/star.png", "emptyStarImage":"../images/starbackground.png", "starSize":"18", "step":"1"} 
+    //gbobal active: used for the star rating system in the Add game form. 
+    var settings = [
+        { "rating": "3", "maxRating": "5", "minRating": "0", "readOnly": "no", "starImage": "../images/star.png", "emptyStarImage": "../images/starbackground.png", "starSize": "18", "step": "1" }
     ]
-    var className="stars";
+    var className = "stars";
     rateSystem(className, settings);
-    
+
 
     document
         .querySelector('#addGameForm')

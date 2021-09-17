@@ -14,7 +14,23 @@
 
     <!-- This is the main row which contains the two columns -->
     <div class="row row-cols-1 justify-content-center my-3">
-
+        <!-- Filter-Table controls -->
+        <div class="col-lg-2 col-sm-12 col-xs-12 text-center">
+            <div class="container p-1">
+                Filter By:
+                <ul class="m-2 list-group">
+                    <form method="get" action="/profile/{{id}}"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_none}}">None</button></form>
+                    <form method="get" action="/profile/{{id}}/currently_playing"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_current}}">Currently Playing</button>
+                    </form>
+                    <form method="get" action="/profile/{{id}}/beaten"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_beaten}}">Beaten</button></form>
+                    <form method="get" action="/profile/{{id}}/platform"><button type="submit"
+                            class="list-group-item list-group-item-action {{f_plat}}">Platform</button></form>
+                </ul>
+            </div>
+        </div>
         <!-- Friend's Library Table -->
         <div class="col-lg-8 col-sm-12 col-xs-12 text-center">
             <div class="table-responsive-sm p-1" style="overflow: auto">
@@ -25,9 +41,10 @@
                         <tr>
                             <th scope="col">Game Title</th>
                             <th scope="col">Platform</th>
-                            <th scope="col">Date Added</th>
+                            <th scope="col">Rating</th>
                             <th scope="col">Beaten?</th>
                             <th scope="col">Currently Playing?</th>
+                            <th scope="col">Date Added</th>
                         </tr>
                     </thead>
 
@@ -37,9 +54,10 @@
                         <tr class="userGames" id={{game.id}}>
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
-                            <td>{{format_time game.date_added}}</td>
+                            <td class="p-0 rating-size">{{{star_rating game.rating}}} </td>
                             <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
                             <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
+                            <td>{{format_time game.date_added}}</td>
                         </tr>
                         {{/each}}
                     </tbody>
