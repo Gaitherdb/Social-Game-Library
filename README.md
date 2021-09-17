@@ -48,4 +48,7 @@
 
 
   ## Questions
-  If you have any questions about the repo, open an issue or contact us directly at Gaitherdb@gmail.com. You can find more of David's work at [Gaitherdb](https://github.com/Gaitherdb)
+  If you have any questions about the repo, you can either open an issue here on Github or contact either of us correctly:
+  David Gaither - Email: Gaitherdb@gmail.com - Github: [Gaitherdb](https://github.com/Gaitherdb)
+  Elbin Cenisev - Email: elbincenisev@outlook.com  - Github: [Elbindb](https://github.com/elbin-cenisev)
+  Nicolas Leon - Email: 
