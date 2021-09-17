@@ -81,8 +81,8 @@
                         <div class="modal-content border border-4 border-danger">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="staticBackdropLabel">Missing Content!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    id="entryErrorClose"></button>
                             </div>
                             <div class="modal-body">
                                 Please fill out the form accordingly.
@@ -144,7 +144,7 @@
                         <tr class="userGames" id="{{game.id}}">
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
-                            <td class="p-0 rating-size" >{{{star_rating game.rating}}} </td>
+                            <td class="p-0 rating-size">{{{star_rating game.rating}}} </td>
                             <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
                             <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
                             <td>{{format_time game.date_added}}</td>
@@ -166,7 +166,7 @@
                                     <option value="Wii U">Wii U</option>
                                     <option value="Wii">Wii</option>
                                 </select></td>
-                                <td><select class="form-select" id="editRating" aria-label="Star Rating">
+                            <td><select class="form-select" id="editRating" aria-label="Star Rating">
                                     <option value="{{game.rating}}" selected>{{game.rating}}</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -187,8 +187,8 @@
                                     <option value="false">No</option>
                                 </select></td>
                             <td>{{format_time game.date_added}}</td>
-                            <td><button class="cnlEditBtn" data-id="{{game.id}}">Cancel</button></td>
-                            <td><button class="deleteGameBtn" data-id="{{game.id}}">Delete</button></td>
+                            <td><button class="cnlEditBtn" data-id="{{game.id}}" >Cancel</button></td>
+                            <td><button class="deleteGameBtn" data-id="{{game.id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button></td>
                             <td><button class="saveGameBtn" data-id="{{game.id}}">Save</button></td>
                         </tr>
                         {{/each}}
@@ -198,6 +198,27 @@
                     </tbody>
 
                 </table>
+            </div>
+            {{!-- modal popup if delete is clicked in edit form --}}
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="Confirm Delete"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center"><i class="bi bi-trash"></i></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="deleteExit"></button>
+                        </div>
+                        <div class="modal-body">
+                           <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="deleteClose">Close</button>
+                            <button type="button" class="btn btn-primary" id="confirmDelete">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
