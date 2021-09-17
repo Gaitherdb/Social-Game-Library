@@ -173,7 +173,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     //gbobal active: used for the star rating system in the Add game form. 
     var settings = [
-        { "rating": "3", "maxRating": "5", "minRating": "0", "readOnly": "no", "starImage": "../images/star.png", "emptyStarImage": "../images/starbackground.png", "starSize": "18", "step": "1" }
+        { "rating": "3", "maxRating": "5", "minRating": "0", "readOnly": "no", "starImage": "/images/star.PNG", "emptyStarImage": "/images/starbackground.PNG", "starSize": "18", "step": "1" }
     ]
     var className = "stars";
     rateSystem(className, settings);
