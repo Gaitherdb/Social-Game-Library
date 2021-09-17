@@ -6,7 +6,7 @@ module.exports = {
   },
   //helper method 'star_rating' renders a certain amount of stars based on user input
   star_rating: (rating) => {
-    star_amount = []  ;
+    let star_amount = []  ;
     for (i=0; i < rating; i++){
       star_amount += `<img src="../images/star.png" class="star-sizing" alt="star rating">`
     }

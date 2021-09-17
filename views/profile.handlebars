@@ -25,9 +25,10 @@
                         <tr>
                             <th scope="col">Game Title</th>
                             <th scope="col">Platform</th>
-                            <th scope="col">Date Added</th>
+                            <th scope="col">Rating</th>
                             <th scope="col">Beaten?</th>
                             <th scope="col">Currently Playing?</th>
+                            <th scope="col">Date Added</th>
                         </tr>
                     </thead>
 
@@ -37,9 +38,10 @@
                         <tr class="userGames" id={{game.id}}>
                             <th scope="row">{{game.name}}</th>
                             <td>{{game.platform}}</td>
-                            <td>{{format_time game.date_added}}</td>
+                            <td class="p-0 rating-size" >{{{star_rating game.rating}}} </td>
                             <td>{{#if game.beaten}}Yes{{else}}No{{/if}}</td>
                             <td>{{#if game.currently_playing}}Yes{{else}}No{{/if}}</td>
+                            <td>{{format_time game.date_added}}</td>
                         </tr>
                         {{/each}}
                     </tbody>
