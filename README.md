@@ -37,6 +37,12 @@
   Access the webpage by going to the deployed site: [Social-Game-Library](https://secret-beach-64321.herokuapp.com/). 
 
   If you want to run this on a local server, set the path to the Social-Game-Library folder in the terminal and log in to MySQL and source the schema.sql by running `source db/schema.sql`. Run `npm seed` to source the seeds folder, if you want preset data.  Then run the server.js file by typing `npm start`. Go to http://localhost:3001 to acesss the site.
+  
+![GameTrackerLibrary](https://user-images.githubusercontent.com/83731627/133897304-41f08e77-944a-4df7-8360-7c5e6e5d9f1f.png)
+![GameTrackerAddGame](https://user-images.githubusercontent.com/83731627/133897310-05c9c949-781e-4b4a-9ef3-ee02470b42bd.png)
+![GameTrackerFeed](https://user-images.githubusercontent.com/83731627/133897306-d03507cf-badb-470d-84ca-b2fa9db42894.png)
+![GameTrackerFriendsList](https://user-images.githubusercontent.com/83731627/133897323-3a0af4f7-2869-4edb-a962-2dcb50df2d70.png)
+
 
   ## License  
   This project is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT).
