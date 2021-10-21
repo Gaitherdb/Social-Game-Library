@@ -35,6 +35,8 @@
   
   ## Usage
   Access the webpage by going to the deployed site: [Social-Game-Library](https://secret-beach-64321.herokuapp.com/). 
+  
+  Use the test account: Email: test@email.com password: !t3stmyPw0rd
 
   If you want to run this on a local server, set the path to the Social-Game-Library folder in the terminal and log in to MySQL and source the schema.sql by running `source db/schema.sql`. Run `npm seed` to source the seeds folder, if you want preset data.  Then run the server.js file by typing `npm start`. Go to http://localhost:3001 to acesss the site.
   
