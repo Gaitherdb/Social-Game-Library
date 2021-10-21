@@ -4,7 +4,7 @@
   ## Description
   A social-media web application that allows a user to make an account and log in, create, edit, and delete owned games entries following a template that saves to the user, add or remove friends, and share entries with added friends. This application is hosted by Heroku. This is intended for users who want to share what games they own with their in-site friends.
 
-  The application is hosted on a server and uses many node modules to make the development easier, including: Express, Express-Session, Express-Handlebars, MySQL2, Sequelize, Connect-Session-Sequelize, Bcrpt, Bootstrap-icons, Validator and Dotenv. It is a fully functional web page that uses:
+  The application is hosted on a server and uses many node modules to make the development easier, including: Express, Express-Session, Express-Handlebars, MySQL2, Sequelize, Connect-Session-Sequelize, Bcrypt, Bootstrap-icons, Validator and Dotenv. It is a fully functional web page that uses:
   * Node.js and Express.js to create RESTful APIs
   * Handlebars.js as the template engine
   * MySQL and the Sequelize ORM for the database
